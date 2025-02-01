@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import { Loader2 } from "lucide-react";
+import { Loader2, Send } from "lucide-react";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 
 interface ChatInterfaceProps {
   formData: {
@@ -20,6 +22,7 @@ interface Message {
 export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
+  const [inputMessage, setInputMessage] = useState("");
 
   const addMessage = (text: string, sender: "developer" | "user", delay: number) => {
     return new Promise<void>((resolve) => {
@@ -67,9 +70,32 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
     initializeChat();
   }, [formData]);
 
+  const handleSendMessage = () => {
+    if (inputMessage.trim()) {
+      addMessage(inputMessage, "user", 0);
+      setInputMessage("");
+    }
+  };
+
   return (
-    <div className="flex flex-col h-[600px] bg-background p-4 rounded-lg shadow-lg">
-      <div className="flex-1 overflow-y-auto space-y-4">
+    <div className="flex flex-col h-[600px] bg-background rounded-lg shadow-lg border border-border">
+      {/* Chat Header */}
+      <div className="flex items-center gap-3 p-4 border-b border-border bg-primary/5">
+        <div className="w-10 h-10 rounded-full overflow-hidden">
+          <img
+            src="https://www.aurumbureau.com/wp-content/uploads/2020/11/Aurum-Speakers-Bureau-Samy-Kamkar.jpg"
+            alt="Developer"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div>
+          <h3 className="font-semibold">Samy Kamkar</h3>
+          <p className="text-sm text-muted-foreground">Full Stack Developer</p>
+        </div>
+      </div>
+
+      {/* Chat Messages */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((message) => (
           <div
             key={message.id}
@@ -78,10 +104,10 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
             }`}
           >
             {message.sender === "developer" && (
-              <div className="w-8 h-8 rounded-full overflow-hidden mr-2">
+              <div className="w-8 h-8 rounded-full overflow-hidden mr-2 flex-shrink-0">
                 <img
-                  src="https://media.licdn.com/dms/image/D4D03AQGg8KiLDrpqQw/profile-displayphoto-shrink_800_800/0/1696799729144?e=1716422400&v=beta&t=Qd_RyI_7QQE6RqzQHqvyLLxqvkGP-RpPZqjQvLBvN0I"
-                  alt="Waleed Ajmal"
+                  src="https://www.aurumbureau.com/wp-content/uploads/2020/11/Aurum-Speakers-Bureau-Samy-Kamkar.jpg"
+                  alt="Developer"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -90,19 +116,35 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
               className={`max-w-[70%] p-3 rounded-lg ${
                 message.sender === "developer"
                   ? "bg-primary text-primary-foreground"
-                  : "bg-muted"
+                  : "bg-secondary text-secondary-foreground"
               }`}
             >
-              {message.text}
+              <p className="whitespace-pre-wrap">{message.text}</p>
             </div>
           </div>
         ))}
         {isTyping && (
           <div className="flex items-center gap-2 text-muted-foreground">
             <Loader2 className="h-4 w-4 animate-spin" />
-            <span>Waleed is typing...</span>
+            <span>Samy is typing...</span>
           </div>
         )}
+      </div>
+
+      {/* Chat Input */}
+      <div className="p-4 border-t border-border">
+        <div className="flex gap-2">
+          <Input
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
+            placeholder="Type your message..."
+            className="flex-1"
+            onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+          />
+          <Button onClick={handleSendMessage} size="icon">
+            <Send className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
     </div>
   );

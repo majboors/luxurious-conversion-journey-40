@@ -220,23 +220,23 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
         <AlertDialogContent className="max-w-md">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-2xl text-center mb-4">
-              You're in luck! We have one of our developers online right now.
+              We have found a developer for you!
             </AlertDialogTitle>
             <AlertDialogDescription>
               <div className="flex flex-col items-center space-y-4">
                 <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-200">
                   <img
-                    src="https://media.licdn.com/dms/image/D4D03AQGg8KiLDrpqQw/profile-displayphoto-shrink_800_800/0/1696799729144?e=1716422400&v=beta&t=Qd_RyI_7QQE6RqzQHqvyLLxqvkGP-RpPZqjQvLBvN0I"
-                    alt="Waleed Ajmal"
+                    src="https://www.aurumbureau.com/wp-content/uploads/2020/11/Aurum-Speakers-Bureau-Samy-Kamkar.jpg"
+                    alt="Samy Kamkar"
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="text-center">
-                  <h3 className="font-semibold text-lg">Waleed Ajmal</h3>
+                  <h3 className="font-semibold text-lg">Samy Kamkar</h3>
                   <p className="text-sm text-muted-foreground">Full Stack Developer</p>
                 </div>
                 <a
-                  href="https://www.linkedin.com/in/waleed-ajmal/"
+                  href="https://www.linkedin.com/in/samy-kamkar/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-accent hover:text-accent/80 transition-colors"
