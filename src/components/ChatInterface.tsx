@@ -92,7 +92,6 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
       );
       setIsTyping(false);
 
-      // Add 10-second delay before showing the example website link
       await new Promise(resolve => setTimeout(resolve, 10000));
 
       await addMessage(
@@ -102,7 +101,6 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
         true
       );
       
-      // Enable typing after the link is sent
       setCanType(true);
     };
 
@@ -117,7 +115,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
     }
   };
 
-  // ... keep existing code (return JSX)
+  // ... keep existing code (JSX for chat interface layout)
 
   return (
     <div className="flex h-screen bg-background">
@@ -156,7 +154,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
           </div>
         </div>
 
-        {/* Chat Messages */}
+      {/* Chat Messages */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages.map((message) => (
             <div
@@ -203,21 +201,20 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
           )}
         </div>
 
-        {/* Chat Input */}
-        <div className="p-4 border-t border-border">
-          <div className="flex gap-2">
-            <Input
-              value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
-              placeholder={canType ? "Type your message..." : "Please wait for the example website..."}
-              className="flex-1"
-              onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-              disabled={!canType}
-            />
-            <Button onClick={handleSendMessage} size="icon" disabled={!canType}>
-              <Send className="h-4 w-4" />
-            </Button>
-          </div>
+      {/* Chat Input */}
+      <div className="p-4 border-t border-border">
+        <div className="flex gap-2">
+          <Input
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
+            placeholder={canType ? "Type your message..." : "Please wait for developer..."}
+            className="flex-1"
+            onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+            disabled={!canType}
+          />
+          <Button onClick={handleSendMessage} size="icon" disabled={!canType}>
+            <Send className="h-4 w-4" />
+          </Button>
         </div>
       </div>
     </div>
