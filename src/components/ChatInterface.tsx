@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { TypewriterText } from "./TypewriterText";
 import { toast } from "./ui/use-toast";
 import { handleAction } from "@/utils/actionHandler";
+import { useScrollTracking } from "@/hooks/useScrollTracking";
 
 interface ChatInterfaceProps {
   formData: {
@@ -128,9 +129,13 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
     await handleAction('text_input', { text });
   };
 
+  // Add scroll tracking
+  useScrollTracking('chat-messages');
+  useScrollTracking('benefits-sidebar');
+
   return (
     <div className="flex h-screen bg-background">
-      <div className="w-1/4 border-r border-border bg-primary/5 p-4 flex flex-col space-y-8 animate-slide-in-right">
+      <div id="benefits-sidebar" className="w-1/4 border-r border-border bg-primary/5 p-4 flex flex-col space-y-8 animate-slide-in-right overflow-y-auto">
         <div className="text-center">
           <h3 className="text-lg font-semibold text-secondary-DEFAULT mb-2">
             <TypewriterText words={words} delay={3000} />
@@ -192,7 +197,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        <div id="chat-messages" className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages.map((message) => (
             <div
               key={message.id}

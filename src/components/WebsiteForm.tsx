@@ -15,6 +15,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { handleAction } from "@/utils/actionHandler";
+import { useScrollTracking } from "@/hooks/useScrollTracking";
 
 interface WebsiteFormProps {
   open: boolean;
@@ -195,7 +196,7 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="sm:max-w-[600px]">
-          <div className="space-y-8">
+          <div id="form-content" className="space-y-8 max-h-[80vh] overflow-y-auto">
             <div className="space-y-2">
               <Progress value={progress} className="h-2" />
               <div className="flex justify-between text-sm text-muted-foreground">
