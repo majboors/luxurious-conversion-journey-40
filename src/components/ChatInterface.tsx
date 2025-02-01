@@ -228,7 +228,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
         <div className="flex items-center gap-3 p-4 border-b border-border bg-primary/5">
           <div className="w-10 h-10 rounded-full overflow-hidden">
             <img
-              src="/lovable-uploads/samy-profile.jpg"
+              src="https://www.aurumbureau.com/wp-content/uploads/2020/11/Aurum-Speakers-Bureau-Samy-Kamkar.jpg"
               alt="Developer"
               className="w-full h-full object-cover"
             />
@@ -260,7 +260,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
               {message.sender === "developer" && (
                 <div className="w-8 h-8 rounded-full overflow-hidden mr-2 flex-shrink-0">
                   <img
-                    src="/lovable-uploads/samy-profile.jpg"
+                    src="https://www.aurumbureau.com/wp-content/uploads/2020/11/Aurum-Speakers-Bureau-Samy-Kamkar.jpg"
                     alt="Developer"
                     className="w-full h-full object-cover"
                   />
