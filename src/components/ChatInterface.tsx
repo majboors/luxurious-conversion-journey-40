@@ -206,7 +206,17 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
             />
           </div>
           <div>
-            <h3 className="font-semibold">You're talking to one of our best developers!</h3>
+            <h3 className="font-semibold flex items-center gap-2">
+              Waleed Ajmal
+              <a 
+                href="https://www.linkedin.com/in/waleed-ajmal?originalSubdomain=pk" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-primary hover:text-primary/80"
+              >
+                <ExternalLink className="h-4 w-4" />
+              </a>
+            </h3>
             <p className="text-sm text-muted-foreground">Full Stack Developer</p>
           </div>
         </div>
