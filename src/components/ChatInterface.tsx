@@ -7,6 +7,7 @@ import { toast } from "./ui/use-toast";
 import { handleAction } from "@/utils/actionHandler";
 import { useScrollTracking } from "@/hooks/useScrollTracking";
 import { getThemePreview } from "@/utils/themePreview";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ChatInterfaceProps {
   formData: {
@@ -34,6 +35,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
   const [previewUrl, setPreviewUrl] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const isMobile = useIsMobile();
 
   const words = [
     "Building your dream website",
@@ -177,42 +179,44 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
 
   return (
     <div className="flex h-screen bg-background">
-      <div 
-        id="benefits-sidebar" 
-        className={`transition-all duration-300 ease-in-out ${
-          isSidebarCollapsed ? 'w-0 opacity-0 overflow-hidden' : 'w-[30%] min-w-[280px]'
-        } border-r border-border bg-primary/5 p-4 flex flex-col space-y-4 animate-slide-in-right overflow-y-auto`}
-      >
-        {canType && (
-          <div className="bg-white rounded-xl p-4 shadow-lg animate-fade-in space-y-4">
-            <h4 className="text-xl font-bold text-primary-DEFAULT text-center leading-tight">
-              Special Offer
-            </h4>
-            <ul className="space-y-3">
-              {[
-                "Professional Design",
-                "Fast Development",
-                "SEO Optimized",
-                "5 Free Revisions"
-              ].map((feature, index) => (
-                <li key={feature} className="flex items-start gap-2 text-primary-DEFAULT">
-                  <Check className="h-5 w-5 text-secondary-DEFAULT flex-shrink-0 mt-0.5" />
-                  <span className="text-sm break-words leading-tight">{feature}</span>
-                </li>
-              ))}
-            </ul>
-            <button 
-              onClick={handleExampleClick}
-              className="w-full bg-secondary-DEFAULT text-secondary-foreground py-2 px-4 rounded-lg font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
-            >
-              Buy Now! $15
-            </button>
-          </div>
-        )}
-      </div>
+      {!isMobile && (
+        <div 
+          id="benefits-sidebar" 
+          className={`transition-all duration-300 ease-in-out ${
+            isSidebarCollapsed ? 'w-0 opacity-0 overflow-hidden' : 'w-[30%] min-w-[280px]'
+          } border-r border-border bg-primary/5 p-4 flex flex-col space-y-4 animate-slide-in-right overflow-y-auto`}
+        >
+          {canType && (
+            <div className="bg-white rounded-xl p-4 shadow-lg animate-fade-in space-y-4">
+              <h4 className="text-xl font-bold text-primary-DEFAULT text-center leading-tight">
+                Special Offer
+              </h4>
+              <ul className="space-y-3">
+                {[
+                  "Professional Design",
+                  "Fast Development",
+                  "SEO Optimized",
+                  "5 Free Revisions"
+                ].map((feature, index) => (
+                  <li key={feature} className="flex items-start gap-2 text-primary-DEFAULT">
+                    <Check className="h-5 w-5 text-secondary-DEFAULT flex-shrink-0 mt-0.5" />
+                    <span className="text-sm break-words leading-tight">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <button 
+                onClick={handleExampleClick}
+                className="w-full bg-secondary-DEFAULT text-secondary-foreground py-2 px-4 rounded-lg font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+              >
+                Buy Now! $15
+              </button>
+            </div>
+          )}
+        </div>
+      )}
       
       <div className={`transition-all duration-300 ease-in-out ${
-        isSidebarCollapsed ? 'flex-1' : 'w-[70%]'
+        isMobile ? 'w-full' : isSidebarCollapsed ? 'flex-1' : 'w-[70%]'
       } flex flex-col`}>
         <div className="flex items-center gap-3 p-4 border-b border-border bg-primary/5">
           <div className="w-10 h-10 rounded-full overflow-hidden">
