@@ -3,8 +3,15 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Calendar, BookOpen, Image, DollarSign, Megaphone, Users, Target, ChevronRight } from "lucide-react";
+import { ShoppingCart, Calendar, BookOpen, Image, DollarSign, Megaphone, Users, Target, ChevronRight, Linkedin } from "lucide-react";
 import { LoadingScreen } from "./LoadingScreen";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface FormStep {
   title: string;
@@ -38,6 +45,7 @@ interface WebsiteFormProps {
 export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [showLoading, setShowLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({
     websiteName: "",
     category: "",
@@ -51,13 +59,18 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
     if (currentStep < steps.length - 1) {
       setCurrentStep((prev) => prev + 1);
     } else {
-      setShowLoading(true);
-      onOpenChange(false); // Close the dialog when showing loading screen
-      // Simulate API call or processing time
-      setTimeout(() => {
-        console.log("Form completed:", formData);
-      }, 15000); // Show loading screen for 15 seconds
+      setShowSuccess(true);
+      onOpenChange(false);
     }
+  };
+
+  const handleSuccessClose = () => {
+    setShowSuccess(false);
+    setShowLoading(true);
+    // Simulate API call or processing time
+    setTimeout(() => {
+      console.log("Form completed:", formData);
+    }, 15000);
   };
 
   const renderStep = () => {
@@ -175,7 +188,47 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
           </div>
         </DialogContent>
       </Dialog>
-      
+
+      <AlertDialog open={showSuccess} onOpenChange={setShowSuccess}>
+        <AlertDialogContent className="max-w-md">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-2xl text-center mb-4">
+              You're in luck! We have one of our developers online right now.
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              <div className="flex flex-col items-center space-y-4">
+                <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-200">
+                  <img
+                    src="https://media.licdn.com/dms/image/D4D03AQGg8KiLDrpqQw/profile-displayphoto-shrink_800_800/0/1696799729144?e=1716422400&v=beta&t=Qd_RyI_7QQE6RqzQHqvyLLxqvkGP-RpPZqjQvLBvN0I"
+                    alt="Waleed Ajmal"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="text-center">
+                  <h3 className="font-semibold text-lg">Waleed Ajmal</h3>
+                  <p className="text-sm text-muted-foreground">Full Stack Developer</p>
+                </div>
+                <a
+                  href="https://www.linkedin.com/in/waleed-ajmal/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-accent hover:text-accent/80 transition-colors"
+                >
+                  <Linkedin className="w-5 h-5" />
+                  <span>View LinkedIn Profile</span>
+                </a>
+                <Button 
+                  onClick={handleSuccessClose}
+                  className="mt-4 w-full"
+                >
+                  Continue
+                </Button>
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+        </AlertDialogContent>
+      </AlertDialog>
+
       {showLoading && <LoadingScreen />}
     </>
   );
