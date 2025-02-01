@@ -325,16 +325,16 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
                 <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-200">
                   <img
                     src="https://www.aurumbureau.com/wp-content/uploads/2020/11/Aurum-Speakers-Bureau-Samy-Kamkar.jpg"
-                    alt="Samy Kamkar"
+                    alt="Waleed Ajmal"
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="text-center">
-                  <h3 className="font-semibold text-lg">Samy Kamkar</h3>
+                  <h3 className="font-semibold text-lg">Waleed Ajmal</h3>
                   <p className="text-sm text-muted-foreground">Full Stack Developer</p>
                 </div>
                 <a
-                  href="https://www.linkedin.com/in/samy-kamkar/"
+                  href="https://www.linkedin.com/in/waleed-ajmal?originalSubdomain=pk"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-accent hover:text-accent/80 transition-colors"
