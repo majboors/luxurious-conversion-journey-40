@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
@@ -45,8 +45,9 @@ interface WebsiteFormProps {
 
 export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [showLoading, setShowLoading] = useState(false);
+  const [showInitialLoading, setShowInitialLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showFinalLoading, setShowFinalLoading] = useState(false);
   const [formData, setFormData] = useState({
     websiteName: "",
     category: "",
@@ -60,15 +61,22 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
     if (currentStep < steps.length - 1) {
       setCurrentStep((prev) => prev + 1);
     } else {
-      setShowSuccess(true);
       onOpenChange(false);
+      setShowInitialLoading(true);
+      
+      // Show initial loading for 3 seconds
+      setTimeout(() => {
+        setShowInitialLoading(false);
+        setShowSuccess(true);
+      }, 3000);
     }
   };
 
   const handleSuccessClose = () => {
     setShowSuccess(false);
-    setShowLoading(true);
-    // Simulate API call or processing time
+    setShowFinalLoading(true);
+    
+    // Show final loading screen
     setTimeout(() => {
       console.log("Form completed:", formData);
     }, 15000);
@@ -230,7 +238,8 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
         </AlertDialogContent>
       </AlertDialog>
 
-      {showLoading && <LoadingScreen />}
+      {showInitialLoading && <LoadingScreen />}
+      {showFinalLoading && <LoadingScreen />}
     </>
   );
 };
