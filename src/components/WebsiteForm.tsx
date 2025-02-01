@@ -4,6 +4,7 @@ import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Calendar, BookOpen, Image, DollarSign, Megaphone, Users, Target, ChevronRight } from "lucide-react";
+import { LoadingScreen } from "./LoadingScreen";
 
 interface FormStep {
   title: string;
@@ -36,6 +37,7 @@ interface WebsiteFormProps {
 
 export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [showLoading, setShowLoading] = useState(false);
   const [formData, setFormData] = useState({
     websiteName: "",
     category: "",
@@ -49,8 +51,11 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
     if (currentStep < steps.length - 1) {
       setCurrentStep((prev) => prev + 1);
     } else {
-      // Show completion dialog or proceed to next step
-      console.log("Form completed:", formData);
+      setShowLoading(true);
+      // Simulate API call or processing time
+      setTimeout(() => {
+        console.log("Form completed:", formData);
+      }, 15000); // Show loading screen for 15 seconds
     }
   };
 
@@ -134,39 +139,43 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px]">
-        <div className="space-y-8">
-          <div className="space-y-2">
-            <Progress value={progress} className="h-2" />
-            <div className="flex justify-between text-sm text-muted-foreground">
-              <span>Step {currentStep + 1} of {steps.length}</span>
-              <span>{Math.round(progress)}% completed</span>
+    <>
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="sm:max-w-[600px]">
+          <div className="space-y-8">
+            <div className="space-y-2">
+              <Progress value={progress} className="h-2" />
+              <div className="flex justify-between text-sm text-muted-foreground">
+                <span>Step {currentStep + 1} of {steps.length}</span>
+                <span>{Math.round(progress)}% completed</span>
+              </div>
+            </div>
+
+            <div>
+              <h2 className="text-2xl font-bold tracking-tight">
+                {steps[currentStep].title}
+              </h2>
+              <p className="text-muted-foreground">
+                {steps[currentStep].description}
+              </p>
+            </div>
+
+            {renderStep()}
+
+            <div className="flex justify-end">
+              <Button
+                onClick={handleNext}
+                className="w-32 h-12 text-lg hover:scale-105 transition-all duration-300"
+              >
+                {currentStep === steps.length - 1 ? "Finish" : "Next"}
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </Button>
             </div>
           </div>
-
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight">
-              {steps[currentStep].title}
-            </h2>
-            <p className="text-muted-foreground">
-              {steps[currentStep].description}
-            </p>
-          </div>
-
-          {renderStep()}
-
-          <div className="flex justify-end">
-            <Button
-              onClick={handleNext}
-              className="w-32 h-12 text-lg hover:scale-105 transition-all duration-300"
-            >
-              {currentStep === steps.length - 1 ? "Finish" : "Next"}
-              <ChevronRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      </DialogContent>
-    </Dialog>
+        </DialogContent>
+      </Dialog>
+      
+      {showLoading && <LoadingScreen />}
+    </>
   );
 };
