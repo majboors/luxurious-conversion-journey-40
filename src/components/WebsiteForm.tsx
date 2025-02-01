@@ -4,7 +4,7 @@ import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { ShoppingCart, Calendar, BookOpen, Image, DollarSign as DollarSignIcon, Speaker, Users as Users2, Target, Linkedin } from "lucide-react";
+import { ShoppingCart, Calendar, BookOpen, Image, DollarSign as DollarSignIcon, Speaker, Users as Users2, Target, Linkedin, Plus } from "lucide-react";
 import { LoadingScreen } from "./LoadingScreen";
 import { AnimatedButton } from "@/components/ui/animated-button";
 import { ChatInterface } from "./ChatInterface";
@@ -57,6 +57,8 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showFinalLoading, setShowFinalLoading] = useState(false);
   const [showChat, setShowChat] = useState(false);
+  const [customCategory, setCustomCategory] = useState("");
+  const [customGoal, setCustomGoal] = useState("");
   const [formData, setFormData] = useState({
     websiteName: "",
     websiteDescription: "",
@@ -131,58 +133,86 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
         );
       case 2:
         return (
-          <div className="grid grid-cols-2 gap-4 py-6">
-            {[
-              { icon: ShoppingCart, label: "Ecommerce", hoverBg: "hover:bg-[#D6BCFA]" },
-              { icon: Calendar, label: "Events", hoverBg: "hover:bg-[#FEF7CD]" },
-              { icon: BookOpen, label: "Blogs", hoverBg: "hover:bg-[#D3E4FD]" },
-              { icon: Image, label: "Portfolio", hoverBg: "hover:bg-[#86EFAC]" },
-            ].map(({ icon: Icon, label, hoverBg }) => (
-              <Button
-                key={label}
-                variant={formData.category === label ? "default" : "outline"}
-                className={`h-24 relative group ${hoverBg} transition-colors duration-300`}
-                onClick={() => setFormData({ ...formData, category: label })}
-              >
-                <div className="flex flex-col items-center justify-center w-full h-full">
-                  <Icon 
-                    className={`h-6 w-6 absolute top-0 opacity-0 group-hover:opacity-100 transition-all duration-500 transform 
-                      ${formData.category === label ? 'translate-y-8 opacity-100' : 'group-hover:translate-y-8'}`}
-                  />
-                  <span className={`text-xl font-bold group-hover:mt-8 transition-all duration-300 ${formData.category === label ? 'mt-8' : ''}`}>
-                    {label}
-                  </span>
-                </div>
-              </Button>
-            ))}
+          <div className="space-y-4 py-6">
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { icon: ShoppingCart, label: "Ecommerce", hoverBg: "hover:bg-[#D6BCFA]" },
+                { icon: Calendar, label: "Events", hoverBg: "hover:bg-[#FEF7CD]" },
+                { icon: BookOpen, label: "Blogs", hoverBg: "hover:bg-[#D3E4FD]" },
+                { icon: Image, label: "Portfolio", hoverBg: "hover:bg-[#86EFAC]" },
+                { icon: Plus, label: "Others", hoverBg: "hover:bg-[#FDA4AF]" },
+              ].map(({ icon: Icon, label, hoverBg }) => (
+                <Button
+                  key={label}
+                  variant={formData.category === label ? "default" : "outline"}
+                  className={`h-24 relative group ${hoverBg} transition-colors duration-300`}
+                  onClick={() => setFormData({ ...formData, category: label })}
+                >
+                  <div className="flex flex-col items-center justify-center w-full h-full">
+                    <Icon 
+                      className={`h-6 w-6 absolute top-0 opacity-0 group-hover:opacity-100 transition-all duration-500 transform 
+                        ${formData.category === label ? 'translate-y-8 opacity-100' : 'group-hover:translate-y-8'}`}
+                    />
+                    <span className={`text-xl font-bold group-hover:mt-8 transition-all duration-300 ${formData.category === label ? 'mt-8' : ''}`}>
+                      {label}
+                    </span>
+                  </div>
+                </Button>
+              ))}
+            </div>
+            {formData.category === "Others" && (
+              <Input
+                placeholder="Enter your category..."
+                value={customCategory}
+                onChange={(e) => {
+                  setCustomCategory(e.target.value);
+                  setFormData({ ...formData, category: e.target.value });
+                }}
+                className="mt-4"
+              />
+            )}
           </div>
         );
       case 3:
         return (
-          <div className="grid grid-cols-2 gap-4 py-6">
-            {[
-              { icon: DollarSignIcon, label: "Make passive income", hoverBg: "hover:bg-[#F2FCE2]", iconColor: "text-green-500" },
-              { icon: Speaker, label: "Inform people", hoverBg: "hover:bg-[#D3E4FD]", iconColor: "text-blue-500" },
-              { icon: Users2, label: "Build a community", hoverBg: "hover:bg-[#D6BCFA]", iconColor: "text-purple-500" },
-              { icon: Target, label: "Generate leads", hoverBg: "hover:bg-[#FEF7CD]", iconColor: "text-yellow-500" },
-            ].map(({ icon: Icon, label, hoverBg, iconColor }) => (
-              <Button
-                key={label}
-                variant={formData.goal === label ? "default" : "outline"}
-                className={`h-24 relative group ${hoverBg} transition-all duration-300`}
-                onClick={() => setFormData({ ...formData, goal: label })}
-              >
-                <div className="flex flex-col items-center justify-center w-full h-full">
-                  <Icon 
-                    className={`h-6 w-6 absolute top-0 opacity-0 group-hover:opacity-100 transition-all duration-500 transform ${iconColor}
-                      ${formData.goal === label ? 'translate-y-8 opacity-100' : 'group-hover:translate-y-8'}`}
-                  />
-                  <span className={`text-xl font-bold group-hover:mt-8 transition-all duration-300 ${formData.goal === label ? 'mt-8' : ''}`}>
-                    {label}
-                  </span>
-                </div>
-              </Button>
-            ))}
+          <div className="space-y-4 py-6">
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { icon: DollarSignIcon, label: "Make passive income", hoverBg: "hover:bg-[#F2FCE2]", iconColor: "text-green-500" },
+                { icon: Speaker, label: "Inform people", hoverBg: "hover:bg-[#D3E4FD]", iconColor: "text-blue-500" },
+                { icon: Users2, label: "Build a community", hoverBg: "hover:bg-[#D6BCFA]", iconColor: "text-purple-500" },
+                { icon: Target, label: "Generate leads", hoverBg: "hover:bg-[#FEF7CD]", iconColor: "text-yellow-500" },
+                { icon: Plus, label: "Others", hoverBg: "hover:bg-[#FDA4AF]", iconColor: "text-red-500" },
+              ].map(({ icon: Icon, label, hoverBg, iconColor }) => (
+                <Button
+                  key={label}
+                  variant={formData.goal === label ? "default" : "outline"}
+                  className={`h-24 relative group ${hoverBg} transition-all duration-300`}
+                  onClick={() => setFormData({ ...formData, goal: label })}
+                >
+                  <div className="flex flex-col items-center justify-center w-full h-full">
+                    <Icon 
+                      className={`h-6 w-6 absolute top-0 opacity-0 group-hover:opacity-100 transition-all duration-500 transform ${iconColor}
+                        ${formData.goal === label ? 'translate-y-8 opacity-100' : 'group-hover:translate-y-8'}`}
+                    />
+                    <span className={`text-xl font-bold group-hover:mt-8 transition-all duration-300 ${formData.goal === label ? 'mt-8' : ''}`}>
+                      {label}
+                    </span>
+                  </div>
+                </Button>
+              ))}
+            </div>
+            {formData.goal === "Others" && (
+              <Input
+                placeholder="Enter your goal..."
+                value={customGoal}
+                onChange={(e) => {
+                  setCustomGoal(e.target.value);
+                  setFormData({ ...formData, goal: e.target.value });
+                }}
+                className="mt-4"
+              />
+            )}
           </div>
         );
       case 4:
