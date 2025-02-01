@@ -3,7 +3,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Calendar, BookOpen, Image, DollarSign, Megaphone, Users, Target, ChevronRight, Linkedin } from "lucide-react";
+import { ShoppingCart, Calendar, BookOpen, Image } from "lucide-react";
 import { LoadingScreen } from "./LoadingScreen";
 import { AnimatedButton } from "@/components/ui/animated-button";
 import { ChatInterface } from "./ChatInterface";
@@ -102,19 +102,24 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
         return (
           <div className="grid grid-cols-2 gap-4 py-6">
             {[
-              { icon: ShoppingCart, label: "Ecommerce" },
-              { icon: Calendar, label: "Events" },
-              { icon: BookOpen, label: "Blogs" },
-              { icon: Image, label: "Portfolio" },
-            ].map(({ icon: Icon, label }) => (
+              { icon: ShoppingCart, label: "Ecommerce", hoverBg: "hover:bg-[#D6BCFA]" },
+              { icon: Calendar, label: "Events", hoverBg: "hover:bg-[#FEF7CD]" },
+              { icon: BookOpen, label: "Blogs", hoverBg: "hover:bg-[#D3E4FD]" },
+              { icon: Image, label: "Portfolio", hoverBg: "hover:bg-[#86EFAC]" },
+            ].map(({ icon: Icon, label, hoverBg }) => (
               <Button
                 key={label}
                 variant={formData.category === label ? "default" : "outline"}
-                className="h-24 space-y-2 flex flex-col items-center justify-center hover:scale-105 transition-all duration-300"
+                className={`h-24 relative group ${hoverBg} transition-colors duration-300`}
                 onClick={() => setFormData({ ...formData, category: label })}
               >
-                <Icon className="h-6 w-6" />
-                <span>{label}</span>
+                <div className="flex flex-col items-center justify-center w-full h-full">
+                  <Icon 
+                    className={`h-6 w-6 absolute top-0 opacity-0 group-hover:opacity-100 transition-all duration-500 transform 
+                      ${formData.category === label ? 'translate-y-8 opacity-100' : 'group-hover:translate-y-8'}`}
+                  />
+                  <span className="mt-8">{label}</span>
+                </div>
               </Button>
             ))}
           </div>
@@ -196,7 +201,6 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
                 className="w-32 h-12 text-lg hover:scale-105 transition-all duration-300"
               >
                 {currentStep === steps.length - 1 ? "Finish" : "Next"}
-                <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
           </div>
