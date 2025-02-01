@@ -1,6 +1,6 @@
 import { getApiKey } from "@/utils/apiConfig";
 import { Badge } from "@/components/ui/badge";
-import { InfoCircle } from "lucide-react";
+import { Info } from "lucide-react";
 
 export const ApiStatus = () => {
   const apiKey = getApiKey();
@@ -12,7 +12,7 @@ export const ApiStatus = () => {
       </Badge>
       {apiKey && (
         <div className="flex items-center gap-1 text-sm text-muted-foreground">
-          <InfoCircle className="h-4 w-4" />
+          <Info className="h-4 w-4" />
           <span>API Key Configured</span>
         </div>
       )}
