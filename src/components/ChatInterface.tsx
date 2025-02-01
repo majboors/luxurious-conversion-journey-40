@@ -115,8 +115,6 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
     }
   };
 
-  // ... keep existing code (JSX for chat interface layout)
-
   return (
     <div className="flex h-screen bg-background">
       <div className="w-1/4 border-r border-border bg-primary/5 p-4 flex flex-col space-y-8 animate-slide-in-right">
@@ -138,7 +136,6 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
         </div>
       </div>
       
-      {/* Main Chat Interface */}
       <div className="flex-1 flex flex-col">
         <div className="flex items-center gap-3 p-4 border-b border-border bg-primary/5">
           <div className="w-10 h-10 rounded-full overflow-hidden">
@@ -154,7 +151,6 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
           </div>
         </div>
 
-      {/* Chat Messages */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages.map((message) => (
             <div
@@ -201,20 +197,20 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
           )}
         </div>
 
-      {/* Chat Input */}
-      <div className="p-4 border-t border-border">
-        <div className="flex gap-2">
-          <Input
-            value={inputMessage}
-            onChange={(e) => setInputMessage(e.target.value)}
-            placeholder={canType ? "Type your message..." : "Please wait for developer..."}
-            className="flex-1"
-            onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-            disabled={!canType}
-          />
-          <Button onClick={handleSendMessage} size="icon" disabled={!canType}>
-            <Send className="h-4 w-4" />
-          </Button>
+        <div className="p-4 border-t border-border">
+          <div className="flex gap-2">
+            <Input
+              value={inputMessage}
+              onChange={(e) => setInputMessage(e.target.value)}
+              placeholder={canType ? "Type your message..." : "Please wait for developer..."}
+              className="flex-1"
+              onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+              disabled={!canType}
+            />
+            <Button onClick={handleSendMessage} size="icon" disabled={!canType}>
+              <Send className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </div>
     </div>
