@@ -26,6 +26,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [inputMessage, setInputMessage] = useState("");
+  const [canType, setCanType] = useState(false);
 
   const words = [
     "Building your dream website",
@@ -66,7 +67,6 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
 
   useEffect(() => {
     const initializeChat = async () => {
-      // First message with selected options - only add if values exist
       if (formData.websiteName || formData.category || formData.goal || formData.traffic) {
         const selectedOptionsMessage = [
           "Here are my website requirements:",
@@ -101,13 +101,16 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
         0,
         true
       );
+      
+      // Enable typing after the link is sent
+      setCanType(true);
     };
 
     initializeChat();
   }, [formData]);
 
   const handleSendMessage = () => {
-    if (inputMessage.trim()) {
+    if (inputMessage.trim() && canType) {
       addMessage(inputMessage, "user", 0);
       redirectToWhatsApp(inputMessage);
       setInputMessage("");
@@ -206,11 +209,12 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
             <Input
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
-              placeholder="Type your message..."
+              placeholder={canType ? "Type your message..." : "Please wait for the example website..."}
               className="flex-1"
               onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+              disabled={!canType}
             />
-            <Button onClick={handleSendMessage} size="icon">
+            <Button onClick={handleSendMessage} size="icon" disabled={!canType}>
               <Send className="h-4 w-4" />
             </Button>
           </div>
