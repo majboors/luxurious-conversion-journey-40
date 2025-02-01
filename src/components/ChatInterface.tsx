@@ -143,10 +143,18 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
           true
         );
 
-        // Add the notification about the price
+        // Updated toast with CTA
         toast({
           title: "Special Offer!",
           description: "Get this professional website for only $15! Limited time offer.",
+          action: (
+            <button
+              onClick={handleExampleClick}
+              className="bg-secondary-DEFAULT text-secondary-foreground px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity"
+            >
+              Buy Now
+            </button>
+          ),
           duration: 5000,
         });
       } catch (error) {
@@ -290,7 +298,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
           {isTyping && (
             <div className="flex items-center gap-2 text-muted-foreground">
               <Loader2 className="h-4 w-4 animate-spin" />
-              <span>Samy is typing...</span>
+              <span>Waleed is typing...</span>
             </div>
           )}
         </div>
