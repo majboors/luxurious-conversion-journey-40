@@ -3,6 +3,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { ShoppingCart, Calendar, BookOpen, Image, DollarSign as DollarSignIcon, Speaker, Users as Users2, Target, Linkedin } from "lucide-react";
 import { LoadingScreen } from "./LoadingScreen";
 import { AnimatedButton } from "@/components/ui/animated-button";
@@ -33,6 +34,10 @@ const steps: FormStep[] = [
     description: "Choose a memorable name for your website",
   },
   {
+    title: "Describe Your Website",
+    description: "Write a brief description of your website",
+  },
+  {
     title: "What Is Your Website About?",
     description: "Select the category that best fits your website",
   },
@@ -54,6 +59,7 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
   const [showChat, setShowChat] = useState(false);
   const [formData, setFormData] = useState({
     websiteName: "",
+    websiteDescription: "",
     category: "",
     goal: "",
     traffic: "",
@@ -112,6 +118,19 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
         );
       case 1:
         return (
+          <div className="space-y-6 py-6">
+            <Textarea
+              placeholder="Write a brief description of your website..."
+              value={formData.websiteDescription}
+              onChange={(e) =>
+                setFormData({ ...formData, websiteDescription: e.target.value })
+              }
+              className="min-h-[100px] text-lg p-4 transition-all duration-300 focus:scale-105"
+            />
+          </div>
+        );
+      case 2:
+        return (
           <div className="grid grid-cols-2 gap-4 py-6">
             {[
               { icon: ShoppingCart, label: "Ecommerce", hoverBg: "hover:bg-[#D6BCFA]" },
@@ -138,7 +157,7 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
             ))}
           </div>
         );
-      case 2:
+      case 3:
         return (
           <div className="grid grid-cols-2 gap-4 py-6">
             {[
@@ -166,7 +185,7 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
             ))}
           </div>
         );
-      case 3:
+      case 4:
         return (
           <div className="grid grid-cols-1 gap-4 py-6">
             {["Just starting out", "Moderate traffic", "High volume"].map(
