@@ -37,14 +37,6 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const isMobile = useIsMobile();
 
-  const words = [
-    "Building your dream website",
-    "Expert development in progress",
-    "Creating your success story",
-    "Crafting the perfect solution",
-    "Making your vision reality"
-  ];
-
   const handleExampleClick = async () => {
     await handleAction('button_click', { button_id: 'example_website' });
     toast({
@@ -53,15 +45,6 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
     });
     window.open(previewUrl || 'https://example.com', '_blank');
   };
-
-  useEffect(() => {
-    // Auto-collapse sidebar after a delay when chat is shown
-    const timer = setTimeout(() => {
-      setIsSidebarCollapsed(true);
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   const redirectToWhatsApp = async (message: string) => {
     await handleAction('button_click', { button_id: 'whatsapp_redirect' });
@@ -194,49 +177,58 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
 
   return (
     <div className="flex h-screen bg-background">
-      {!isMobile && (
-        <div 
-          id="benefits-sidebar" 
-          className={`transition-all duration-300 ease-in-out ${
-            isSidebarCollapsed ? 'w-0 opacity-0 overflow-hidden' : 'w-[30%] min-w-[280px]'
-          } border-r border-border bg-primary/5 p-4 flex flex-col space-y-4 animate-slide-in-right overflow-y-auto`}
-        >
-          {canType && (
-            <div className="bg-white rounded-xl p-4 shadow-lg animate-fade-in space-y-4">
-              <h4 className="text-xl font-bold text-primary-DEFAULT text-center leading-tight">
-                Special Offer
-              </h4>
-              <ul className="space-y-3">
-                {[
-                  "Professional Design",
-                  "Fast Development",
-                  "SEO Optimized",
-                  "5 Free Revisions"
-                ].map((feature, index) => (
-                  <li key={feature} className="flex items-start gap-2 text-primary-DEFAULT">
-                    <Check className="h-5 w-5 text-secondary-DEFAULT flex-shrink-0 mt-0.5" />
-                    <span className="text-sm break-words leading-tight">{feature}</span>
-                  </li>
-                ))}
-              </ul>
+      {/* Sidebar - Always visible on desktop */}
+      <div 
+        id="benefits-sidebar" 
+        className={`hidden md:flex flex-col w-[300px] min-w-[300px] border-r border-border bg-primary/5 p-4 space-y-4`}
+      >
+        <div className="bg-white rounded-xl p-6 shadow-lg animate-fade-in space-y-6">
+          <h4 className="text-2xl font-bold text-primary-DEFAULT text-center leading-tight">
+            Website Bundle
+          </h4>
+          <div className="space-y-4">
+            <p className="text-sm text-primary-DEFAULT/80 text-center">
+              Get your professional website today!
+            </p>
+            <ul className="space-y-3">
+              {[
+                "Professional Design",
+                "Fast Development",
+                "SEO Optimized",
+                "5 Free Revisions",
+                "Mobile Responsive",
+                "24/7 Support",
+                "Secure Hosting",
+                "1 Year Free Domain"
+              ].map((feature, index) => (
+                <li key={feature} className="flex items-start gap-2 text-primary-DEFAULT">
+                  <Check className="h-5 w-5 text-secondary-DEFAULT flex-shrink-0 mt-0.5" />
+                  <span className="text-sm break-words leading-tight">{feature}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="pt-4">
+              <div className="text-center mb-4">
+                <span className="text-3xl font-bold text-primary-DEFAULT">$15</span>
+                <span className="text-sm text-primary-DEFAULT/70"> only</span>
+              </div>
               <button 
                 onClick={handleExampleClick}
-                className="w-full bg-secondary-DEFAULT text-secondary-foreground py-2 px-4 rounded-lg font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                className="w-full bg-secondary-DEFAULT text-secondary-foreground py-3 px-4 rounded-lg font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
               >
-                Buy Now! $15
+                Buy Now!
               </button>
             </div>
-          )}
+          </div>
         </div>
-      )}
-      
-      <div className={`transition-all duration-300 ease-in-out ${
-        isMobile ? 'w-full' : isSidebarCollapsed ? 'flex-1' : 'w-[70%]'
-      } flex flex-col`}>
+      </div>
+
+      {/* Chat Section */}
+      <div className="flex-1 flex flex-col">
         <div className="flex items-center gap-3 p-4 border-b border-border bg-primary/5">
           <div className="w-10 h-10 rounded-full overflow-hidden">
             <img
-              src="https://www.aurumbureau.com/wp-content/uploads/2020/11/Aurum-Speakers-Bureau-Samy-Kamkar.jpg"
+              src="/lovable-uploads/43b4a52f-00b7-473e-a6cf-9b4411a60de2.png"
               alt="Developer"
               className="w-full h-full object-cover"
             />
@@ -268,7 +260,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
               {message.sender === "developer" && (
                 <div className="w-8 h-8 rounded-full overflow-hidden mr-2 flex-shrink-0">
                   <img
-                    src="https://www.aurumbureau.com/wp-content/uploads/2020/11/Aurum-Speakers-Bureau-Samy-Kamkar.jpg"
+                    src="/lovable-uploads/43b4a52f-00b7-473e-a6cf-9b4411a60de2.png"
                     alt="Developer"
                     className="w-full h-full object-cover"
                   />
@@ -307,7 +299,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
           <div className="flex gap-2">
             <Input
               value={inputMessage}
-              onChange={handleInputChange}
+              onChange={(e) => setInputMessage(e.target.value)}
               placeholder={canType ? "Type your message..." : "Please wait for developer..."}
               className="flex-1"
               onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
