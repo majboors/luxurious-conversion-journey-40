@@ -9,6 +9,7 @@ export const LoadingScreen = () => {
     "Finding developer...",
     "Processing timezones...",
     "Finding best developer...",
+    "Found your developer!",
     "Connecting you to our best designer...",
     "Please wait while we ensure the developer is reading your project...",
     "Giving strict instructions to developer...",

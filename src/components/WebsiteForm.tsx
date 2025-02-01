@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart, Calendar, BookOpen, Image, DollarSign, Megaphone, Users, Target, ChevronRight, Linkedin } from "lucide-react";
 import { LoadingScreen } from "./LoadingScreen";
 import { AnimatedButton } from "@/components/ui/animated-button";
+import { ChatInterface } from "./ChatInterface";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -38,16 +39,12 @@ const steps: FormStep[] = [
   },
 ];
 
-interface WebsiteFormProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}
-
 export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [showInitialLoading, setShowInitialLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showFinalLoading, setShowFinalLoading] = useState(false);
+  const [showChat, setShowChat] = useState(false);
   const [formData, setFormData] = useState({
     websiteName: "",
     category: "",
@@ -64,7 +61,6 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
       onOpenChange(false);
       setShowInitialLoading(true);
       
-      // Show initial loading for 3 seconds
       setTimeout(() => {
         setShowInitialLoading(false);
         setShowSuccess(true);
@@ -76,10 +72,10 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
     setShowSuccess(false);
     setShowFinalLoading(true);
     
-    // Show final loading screen
     setTimeout(() => {
-      console.log("Form completed:", formData);
-    }, 15000);
+      setShowFinalLoading(false);
+      setShowChat(true);
+    }, 3000);
   };
 
   const renderStep = () => {
@@ -160,6 +156,10 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
         return null;
     }
   };
+
+  if (showChat) {
+    return <ChatInterface formData={formData} />;
+  }
 
   return (
     <>
