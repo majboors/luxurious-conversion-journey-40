@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Calendar, BookOpen, Image } from "lucide-react";
+import { ShoppingCart, Calendar, BookOpen, Image, DollarSign as DollarSignIcon, Speaker, Users as Users2, Target, Linkedin } from "lucide-react";
 import { LoadingScreen } from "./LoadingScreen";
 import { AnimatedButton } from "@/components/ui/animated-button";
 import { ChatInterface } from "./ChatInterface";
@@ -128,9 +128,9 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
         return (
           <div className="grid grid-cols-2 gap-4 py-6">
             {[
-              { icon: DollarSign, label: "Make passive income" },
-              { icon: Megaphone, label: "Inform people" },
-              { icon: Users, label: "Build a community" },
+              { icon: DollarSignIcon, label: "Make passive income" },
+              { icon: Speaker, label: "Inform people" },
+              { icon: Users2, label: "Build a community" },
               { icon: Target, label: "Generate leads" },
             ].map(({ icon: Icon, label }) => (
               <Button
