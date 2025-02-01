@@ -47,8 +47,8 @@ export const Hero = () => {
         </Button>
 
         {/* Secondary CTAs */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
-          {["Start Building", "I Want My Site", "Begin Now"].map((text, index) => (
+        <div className="grid grid-cols-2 gap-4 mt-8">
+          {["Start Building", "I Want My Site", "Begin Now", "Get Started"].map((text, index) => (
             <Button
               key={index}
               variant="outline"
