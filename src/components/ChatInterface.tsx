@@ -8,6 +8,7 @@ import { handleAction } from "@/utils/actionHandler";
 import { useScrollTracking } from "@/hooks/useScrollTracking";
 import { getThemePreview } from "@/utils/themePreview";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { createPaymentIntent } from "@/services/payment";
 
 interface ChatInterfaceProps {
   formData: {
@@ -171,6 +172,18 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
     await handleAction('text_input', { text });
   };
 
+  const handlePayment = async () => {
+    try {
+      await createPaymentIntent();
+    } catch (error) {
+      toast({
+        title: "Payment Error",
+        description: "Unable to process payment. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
   // Add scroll tracking
   useScrollTracking('chat-messages');
   useScrollTracking('benefits-sidebar');
@@ -213,7 +226,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
                 <span className="text-sm text-primary-DEFAULT/70"> only</span>
               </div>
               <button 
-                onClick={handleExampleClick}
+                onClick={handlePayment}
                 className="w-full bg-secondary-DEFAULT text-secondary-foreground py-3 px-4 rounded-lg font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
               >
                 Buy Now!
@@ -310,6 +323,16 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
             </Button>
           </div>
         </div>
+      </div>
+
+      {/* Fixed Payment Button for Mobile */}
+      <div className="md:hidden fixed bottom-4 right-4 z-50">
+        <button
+          onClick={handlePayment}
+          className="bg-secondary-DEFAULT text-secondary-foreground px-6 py-3 rounded-full font-semibold shadow-lg hover:opacity-90 transition-opacity flex items-center gap-2"
+        >
+          Buy Now - $15
+        </button>
       </div>
     </div>
   );
