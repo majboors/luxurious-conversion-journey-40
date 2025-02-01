@@ -6,9 +6,7 @@ export const Pricing = () => {
   const navigate = useNavigate();
 
   const handleGetStarted = () => {
-    navigate("/");
-    const startFormEvent = new CustomEvent('startForm');
-    window.dispatchEvent(startFormEvent);
+    navigate("/payment");
   };
 
   return (
