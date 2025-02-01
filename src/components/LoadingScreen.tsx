@@ -6,15 +6,15 @@ export const LoadingScreen = () => {
   const { theme } = useTheme();
   
   const loadingMessages = [
-    "Finding developer...",
-    "Processing timezones...",
-    "Finding best developer...",
-    "Found your developer!",
-    "Connecting you to our best designer...",
-    "Please wait while we ensure the developer is reading your project...",
-    "Giving strict instructions to developer...",
-    "Preparing your confidential project details...",
-    "Setting up your customer profile...",
+    "Sending your project...",
+    "Making sure developer is trained...",
+    "Preparing project requirements...",
+    "Setting up development environment...",
+    "Initializing project workspace...",
+    "Configuring development tools...",
+    "Loading project specifications...",
+    "Analyzing project scope...",
+    "Getting everything ready..."
   ];
 
   return (
