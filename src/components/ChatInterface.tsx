@@ -228,7 +228,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
         <div className="flex items-center gap-3 p-4 border-b border-border bg-primary/5">
           <div className="w-10 h-10 rounded-full overflow-hidden">
             <img
-              src="/lovable-uploads/43b4a52f-00b7-473e-a6cf-9b4411a60de2.png"
+              src="/lovable-uploads/samy-profile.jpg"
               alt="Developer"
               className="w-full h-full object-cover"
             />
@@ -260,7 +260,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
               {message.sender === "developer" && (
                 <div className="w-8 h-8 rounded-full overflow-hidden mr-2 flex-shrink-0">
                   <img
-                    src="/lovable-uploads/43b4a52f-00b7-473e-a6cf-9b4411a60de2.png"
+                    src="/lovable-uploads/samy-profile.jpg"
                     alt="Developer"
                     className="w-full h-full object-cover"
                   />
@@ -290,7 +290,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
           {isTyping && (
             <div className="flex items-center gap-2 text-muted-foreground">
               <Loader2 className="h-4 w-4 animate-spin" />
-              <span>Waleed is typing...</span>
+              <span>Samy is typing...</span>
             </div>
           )}
         </div>
