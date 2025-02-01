@@ -128,19 +128,24 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
         return (
           <div className="grid grid-cols-2 gap-4 py-6">
             {[
-              { icon: DollarSignIcon, label: "Make passive income" },
-              { icon: Speaker, label: "Inform people" },
-              { icon: Users2, label: "Build a community" },
-              { icon: Target, label: "Generate leads" },
-            ].map(({ icon: Icon, label }) => (
+              { icon: DollarSignIcon, label: "Make passive income", hoverBg: "hover:bg-[#F2FCE2]", iconColor: "text-green-500" },
+              { icon: Speaker, label: "Inform people", hoverBg: "hover:bg-[#D3E4FD]", iconColor: "text-blue-500" },
+              { icon: Users2, label: "Build a community", hoverBg: "hover:bg-[#D6BCFA]", iconColor: "text-purple-500" },
+              { icon: Target, label: "Generate leads", hoverBg: "hover:bg-[#FEF7CD]", iconColor: "text-yellow-500" },
+            ].map(({ icon: Icon, label, hoverBg, iconColor }) => (
               <Button
                 key={label}
                 variant={formData.goal === label ? "default" : "outline"}
-                className="h-24 space-y-2 flex flex-col items-center justify-center hover:scale-105 transition-all duration-300"
+                className={`h-24 relative group ${hoverBg} transition-all duration-300`}
                 onClick={() => setFormData({ ...formData, goal: label })}
               >
-                <Icon className="h-6 w-6" />
-                <span className="text-center text-sm">{label}</span>
+                <div className="flex flex-col items-center justify-center w-full h-full">
+                  <Icon 
+                    className={`h-6 w-6 absolute top-0 opacity-0 group-hover:opacity-100 transition-all duration-500 transform ${iconColor}
+                      ${formData.goal === label ? 'translate-y-8 opacity-100' : 'group-hover:translate-y-8'}`}
+                  />
+                  <span className="mt-8">{label}</span>
+                </div>
               </Button>
             ))}
           </div>
