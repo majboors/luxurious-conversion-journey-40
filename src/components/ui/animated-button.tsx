@@ -22,14 +22,14 @@ export const AnimatedButton = ({ children, className, ...props }: AnimatedButton
             '--rotate': 50,
             '--plane-x': -8,
             '--plane-y': 40,
-            duration: 0.2
+            duration: 0.5  // Increased from 0.2
           },
           {
             '--rotate': 60,
             '--plane-x': 45,
             '--plane-y': -300,
             '--plane-opacity': 0,
-            duration: 0.375,
+            duration: 0.8,  // Increased from 0.375
             onComplete() {
               setTimeout(() => {
                 gsap.fromTo(
@@ -42,7 +42,7 @@ export const AnimatedButton = ({ children, className, ...props }: AnimatedButton
                     opacity: 1,
                     y: 0,
                     clearProps: true,
-                    duration: 0.3,
+                    duration: 0.5,  // Increased from 0.3
                     onComplete() {
                       button.classList.remove('active');
                     }
