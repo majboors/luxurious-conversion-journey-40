@@ -6,10 +6,14 @@ interface ThemePreviewResponse {
 
 export const getThemePreview = async (formData: Record<string, string>): Promise<ThemePreviewResponse> => {
   try {
-    // Create a description from form data
-    const description = Object.entries(formData)
-      .map(([key, value]) => `${key}: ${value}`)
-      .join('\n');
+    // Convert form data to plain English description
+    const plainEnglishDescription = `
+      I want to create a website called ${formData.websiteName}.
+      The website is about ${formData.websiteDescription}.
+      It falls under the ${formData.category} category.
+      The main goal is to ${formData.goal}.
+      We are expecting ${formData.traffic} visitors.
+    `.trim();
 
     const response = await fetch('https://webdevs.applytocollege.pk/get_theme_preview', {
       method: 'POST',
@@ -17,7 +21,7 @@ export const getThemePreview = async (formData: Record<string, string>): Promise
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        description
+        description: plainEnglishDescription
       }),
     });
 
