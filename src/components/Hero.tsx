@@ -2,10 +2,13 @@ import { TypewriterText } from "./TypewriterText";
 import { Button } from "./ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useState } from "react";
+import { WebsiteForm } from "./WebsiteForm";
 
 export const Hero = () => {
   const words = ["Rich", "Famous", "Successful", "Profitable", "Unstoppable"];
   const { theme, setTheme } = useTheme();
+  const [showForm, setShowForm] = useState(false);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-primary-DEFAULT to-accent-DEFAULT p-4 relative">
@@ -37,6 +40,7 @@ export const Hero = () => {
         {/* Main CTA */}
         <Button
           size="lg"
+          onClick={() => setShowForm(true)}
           className="bg-secondary-DEFAULT text-secondary-foreground hover:bg-secondary-DEFAULT/90 text-lg px-8 py-6 h-auto transform hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-secondary-DEFAULT/20 animate-pulse"
         >
           Get Your Website Now for 15 USD
@@ -48,6 +52,7 @@ export const Hero = () => {
             <Button
               key={index}
               variant="outline"
+              onClick={() => setShowForm(true)}
               className="border-foreground/20 hover:bg-foreground/10 text-foreground text-lg py-6 transform hover:scale-105 transition-all duration-300 hover:border-foreground/40 hover:shadow-md"
             >
               {text}
@@ -55,6 +60,8 @@ export const Hero = () => {
           ))}
         </div>
       </div>
+
+      <WebsiteForm open={showForm} onOpenChange={setShowForm} />
     </div>
   );
 };
