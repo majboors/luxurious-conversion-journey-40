@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { Loader2, Send } from "lucide-react";
+import { Loader2, Send, ExternalLink } from "lucide-react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { TypewriterText } from "./TypewriterText";
+import { toast } from "./ui/use-toast";
 
 interface ChatInterfaceProps {
   formData: {
@@ -18,6 +19,7 @@ interface Message {
   text: string;
   sender: "developer" | "user";
   isTyping?: boolean;
+  isLink?: boolean;
 }
 
 export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
@@ -33,13 +35,22 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
     "Making your vision reality"
   ];
 
-  const addMessage = (text: string, sender: "developer" | "user", delay: number) => {
+  const handleExampleClick = () => {
+    toast({
+      title: "Example Website",
+      description: "Opening example website preview...",
+    });
+    window.open('https://example.com', '_blank');
+  };
+
+  const addMessage = (text: string, sender: "developer" | "user", delay: number, isLink: boolean = false) => {
     return new Promise<void>((resolve) => {
       setTimeout(() => {
         setMessages(prev => [...prev, {
           id: Date.now(),
           text,
-          sender
+          sender,
+          isLink
         }]);
         resolve();
       }, delay);
@@ -70,7 +81,8 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
       await addMessage(
         `View your example website: ${formData.websiteName}`,
         "developer",
-        2000
+        2000,
+        true
       );
     };
 
@@ -148,7 +160,17 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
                     : "bg-secondary text-secondary-foreground"
                 }`}
               >
-                <p className="whitespace-pre-wrap">{message.text}</p>
+                {message.isLink ? (
+                  <button
+                    onClick={handleExampleClick}
+                    className="flex items-center gap-2 text-accent hover:text-accent/80 transition-colors"
+                  >
+                    <span className="whitespace-pre-wrap">{message.text}</span>
+                    <ExternalLink className="w-4 h-4" />
+                  </button>
+                ) : (
+                  <p className="whitespace-pre-wrap">{message.text}</p>
+                )}
               </div>
             </div>
           ))}
