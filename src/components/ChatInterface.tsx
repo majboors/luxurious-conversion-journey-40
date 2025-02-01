@@ -44,7 +44,8 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
       title: "Example Website",
       description: "Opening example website preview...",
     });
-    window.open(previewUrl || 'https://example.com', '_blank');
+    const urlToOpen = previewUrl || 'https://example.com';
+    window.open(urlToOpen, '_blank');
   };
 
   const redirectToWhatsApp = async (message: string) => {
@@ -108,7 +109,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
 
       try {
         const preview = await getThemePreview(formData);
-        setPreviewUrl(preview.preview_url);
+        setPreviewUrl(preview.served_url || preview.preview_url);
         setSearchQuery(preview.search_query);
 
         // Add the plain English description to the chat

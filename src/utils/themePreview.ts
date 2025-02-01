@@ -2,6 +2,7 @@ interface ThemePreviewResponse {
   search_query: string;
   reasoning: string;
   preview_url: string;
+  served_url?: string;
   raw_response?: string;
   plain_description?: string;
 }
