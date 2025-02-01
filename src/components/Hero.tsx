@@ -12,7 +12,7 @@ export const Hero = () => {
       {/* Theme Toggle */}
       <button
         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        className="absolute top-4 right-4 p-2 rounded-full hover:bg-white/10 transition-colors"
+        className="absolute top-4 right-4 p-2 rounded-full hover:bg-white/10 transition-all duration-300 hover:scale-110"
         aria-label="Toggle theme"
       >
         {theme === "dark" ? (
@@ -37,7 +37,7 @@ export const Hero = () => {
         {/* Main CTA */}
         <Button
           size="lg"
-          className="bg-secondary-DEFAULT text-secondary-foreground hover:bg-secondary-DEFAULT/90 text-lg px-8 py-6 h-auto animate-pulse"
+          className="bg-secondary-DEFAULT text-secondary-foreground hover:bg-secondary-DEFAULT/90 text-lg px-8 py-6 h-auto transform hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-secondary-DEFAULT/20 animate-pulse"
         >
           Get Your Website Now for 15 USD
         </Button>
@@ -48,7 +48,7 @@ export const Hero = () => {
             <Button
               key={index}
               variant="outline"
-              className="border-foreground/20 hover:bg-foreground/10 text-foreground"
+              className="border-foreground/20 hover:bg-foreground/10 text-foreground text-lg py-6 transform hover:scale-105 transition-all duration-300 hover:border-foreground/40 hover:shadow-md"
             >
               {text}
             </Button>
