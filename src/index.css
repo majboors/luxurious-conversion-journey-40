@@ -74,9 +74,4 @@
   body {
     @apply bg-background text-foreground;
   }
-
-  /* Add specific light mode text colors */
-  :root:not(.dark) .text-white {
-    color: #1A1F2C;
-  }
 }

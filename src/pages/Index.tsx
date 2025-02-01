@@ -5,8 +5,8 @@ import { ThemeProvider } from "next-themes";
 
 const Index = () => {
   return (
-    <ThemeProvider defaultTheme="dark" attribute="class">
-      <div className="min-h-screen bg-primary-DEFAULT">
+    <ThemeProvider defaultTheme="light" attribute="class">
+      <div className="min-h-screen bg-background">
         <Hero />
         <Benefits />
         <Pricing />
