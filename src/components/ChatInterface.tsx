@@ -167,17 +167,18 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
 
   return (
     <div className="flex h-screen bg-background">
-      <div id="benefits-sidebar" className="w-1/4 border-r border-border bg-primary/5 p-4 flex flex-col space-y-8 animate-slide-in-right overflow-y-auto">
+      <div id="benefits-sidebar" className="w-1/4 min-w-[250px] border-r border-border bg-primary/5 p-6 flex flex-col space-y-6 animate-slide-in-right overflow-y-auto">
         <div className="text-center">
-          <h3 className="text-lg font-semibold text-secondary-DEFAULT mb-2">
+          <h3 className="text-lg font-semibold text-secondary-DEFAULT mb-4 leading-tight">
             <TypewriterText words={words} delay={3000} />
           </h3>
         </div>
+        
         <div className="space-y-4">
           {["Professional Design", "Fast Development", "SEO Optimized"].map((benefit, index) => (
             <div 
               key={benefit}
-              className="p-3 bg-background/50 rounded-lg text-sm animate-fade-in"
+              className="p-4 bg-background/50 rounded-lg text-sm animate-fade-in break-words"
               style={{ animationDelay: `${index * 200}ms` }}
             >
               {benefit}
@@ -185,22 +186,21 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
           ))}
         </div>
         
-        {/* CTA Package - Only shown after example website is sent */}
         {canType && (
-          <div className="bg-white rounded-xl p-6 shadow-lg animate-fade-in">
-            <h4 className="text-xl font-bold text-primary-DEFAULT mb-4 text-center">
+          <div className="bg-white rounded-xl p-6 shadow-lg animate-fade-in space-y-6">
+            <h4 className="text-xl font-bold text-primary-DEFAULT text-center leading-tight">
               Special Offer
             </h4>
-            <ul className="space-y-3 mb-6">
+            <ul className="space-y-4">
               {[
                 "No BS Website",
                 "Instant Website",
                 "You Own It",
                 "5 Free Revisions"
               ].map((feature, index) => (
-                <li key={feature} className="flex items-center gap-2 text-primary-DEFAULT">
-                  <Check className="h-5 w-5 text-secondary-DEFAULT" />
-                  <span className="text-sm">{feature}</span>
+                <li key={feature} className="flex items-start gap-3 text-primary-DEFAULT">
+                  <Check className="h-5 w-5 text-secondary-DEFAULT flex-shrink-0 mt-0.5" />
+                  <span className="text-sm break-words leading-tight">{feature}</span>
                 </li>
               ))}
             </ul>
