@@ -20,30 +20,41 @@ export const getThemePreview = async (formData: Record<string, string>): Promise
       ${formData.traffic ? `We are expecting ${formData.traffic} visitors.` : ''}
     `.trim() : 'No website requirements provided.';
 
-    const response = await fetch('https://webdevs.applytocollege.pk/get_theme_preview', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        description: plainEnglishDescription
-      }),
-    });
+    try {
+      const response = await fetch('https://webdevs.applytocollege.pk/get_theme_preview', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          description: plainEnglishDescription
+        }),
+      });
 
-    if (!response.ok) {
-      throw new Error('Failed to get theme preview');
+      if (!response.ok) {
+        throw new Error('API request failed');
+      }
+
+      const rawResponse = await response.text();
+      console.log('Raw API Response:', rawResponse);
+
+      const jsonResponse = JSON.parse(rawResponse);
+      return {
+        ...jsonResponse,
+        raw_response: rawResponse,
+        plain_description: plainEnglishDescription
+      };
+    } catch (error) {
+      console.log('API Error:', error);
+      // Provide fallback values when the API fails
+      return {
+        search_query: formData.websiteName || 'Your Website',
+        reasoning: 'Based on your requirements',
+        preview_url: 'https://example.com',
+        plain_description: plainEnglishDescription,
+        raw_response: JSON.stringify({ error: 'API request failed' })
+      };
     }
-
-    const rawResponse = await response.text();
-    console.log('Raw API Response:', rawResponse);
-
-    // Parse the response and also return the raw text and plain description
-    const jsonResponse = JSON.parse(rawResponse);
-    return {
-      ...jsonResponse,
-      raw_response: rawResponse,
-      plain_description: plainEnglishDescription
-    };
   } catch (error) {
     console.error('Error getting theme preview:', error);
     throw error;
