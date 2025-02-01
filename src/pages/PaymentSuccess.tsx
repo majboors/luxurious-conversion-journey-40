@@ -6,6 +6,11 @@ export const PaymentSuccess = () => {
   const navigate = useNavigate();
   const orderNumber = Math.random().toString(36).substring(7).toUpperCase();
 
+  const handleWhatsAppClick = () => {
+    const message = encodeURIComponent(`Dear Techrealm, this is my order ID: ${orderNumber}. Let's start with the website development!`);
+    window.open(`https://api.whatsapp.com/send/?phone=923461115757&text=${message}&type=phone_number&app_absent=0`, "_blank");
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <div className="max-w-md w-full space-y-8 text-center">
@@ -16,7 +21,7 @@ export const PaymentSuccess = () => {
         <p className="text-muted-foreground">Order Number: {orderNumber}</p>
         <div className="space-y-4 pt-4">
           <Button 
-            onClick={() => window.open("https://wa.me/923461115757", "_blank")}
+            onClick={handleWhatsAppClick}
             className="w-full gap-2"
           >
             <MessageCircle className="w-4 h-4" />
