@@ -8,6 +8,13 @@ import { ChatInterface } from "@/components/ChatInterface";
 const Index = () => {
   const [showChat, setShowChat] = useState(false);
 
+  // Listen for the custom event from WebsiteForm
+  useState(() => {
+    const handleShowChat = () => setShowChat(true);
+    window.addEventListener('showChat', handleShowChat);
+    return () => window.removeEventListener('showChat', handleShowChat);
+  });
+
   return (
     <ThemeProvider defaultTheme="light" attribute="class">
       <div className="min-h-screen bg-background">
@@ -25,8 +32,11 @@ const Index = () => {
         ) : (
           <>
             <Hero />
-            <Benefits />
-            <Pricing />
+            {/* Benefits and Pricing are only shown on initial landing */}
+            <div className={`transition-opacity duration-500 ${showChat ? 'opacity-0 hidden' : 'opacity-100'}`}>
+              <Benefits />
+              <Pricing />
+            </div>
           </>
         )}
       </div>
