@@ -107,6 +107,15 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
         setPreviewUrl(preview.preview_url);
         setSearchQuery(preview.search_query);
 
+        // Add the plain English description to the chat
+        if (preview.plain_description) {
+          await addMessage(
+            `Here's how I understood your requirements:\n${preview.plain_description}`,
+            "developer",
+            0
+          );
+        }
+
         // Add the raw response to the chat for debugging
         if (preview.raw_response) {
           await addMessage(

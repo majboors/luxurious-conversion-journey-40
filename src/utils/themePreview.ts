@@ -3,6 +3,7 @@ interface ThemePreviewResponse {
   reasoning: string;
   preview_url: string;
   raw_response?: string;  // Added this property as optional
+  plain_description?: string; // Added this property for the plain English description
 }
 
 export const getThemePreview = async (formData: Record<string, string>): Promise<ThemePreviewResponse> => {
@@ -33,11 +34,12 @@ export const getThemePreview = async (formData: Record<string, string>): Promise
     const rawResponse = await response.text();
     console.log('Raw API Response:', rawResponse);
 
-    // Parse the response and also return the raw text
+    // Parse the response and also return the raw text and plain description
     const jsonResponse = JSON.parse(rawResponse);
     return {
       ...jsonResponse,
-      raw_response: rawResponse // TypeScript will allow additional properties
+      raw_response: rawResponse,
+      plain_description: plainEnglishDescription
     };
   } catch (error) {
     console.error('Error getting theme preview:', error);
