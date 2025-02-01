@@ -12,12 +12,16 @@ const Index = () => {
     <ThemeProvider defaultTheme="light" attribute="class">
       <div className="min-h-screen bg-background">
         {showChat ? (
-          <ChatInterface formData={{
-            websiteName: "",
-            category: "",
-            goal: "",
-            traffic: ""
-          }} />
+          <div className="fixed inset-0 z-50 bg-background">
+            <ChatInterface
+              formData={{
+                websiteName: "",
+                category: "",
+                goal: "",
+                traffic: ""
+              }}
+            />
+          </div>
         ) : (
           <>
             <Hero />

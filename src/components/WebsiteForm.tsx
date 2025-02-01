@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
@@ -82,6 +82,9 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
       setShowChat(true);
       // Close the form dialog completely
       onOpenChange(false);
+      // Find the closest parent with showChat state and update it
+      const event = new CustomEvent('showChat', { detail: true });
+      window.dispatchEvent(event);
     }, 3000);
   };
 
