@@ -78,8 +78,8 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
 
   useEffect(() => {
     const initializeChat = async () => {
-      // Only send form data message if we have any valid data
-      const hasFormData = formData.websiteName || formData.websiteDescription || formData.category || formData.goal || formData.traffic;
+      // Check if we have any valid form data
+      const hasFormData = Object.values(formData).some(value => value && value.trim() !== '');
       
       if (hasFormData) {
         const selectedOptionsMessage = [
@@ -93,7 +93,10 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
         .filter(Boolean) // Remove null values
         .join('\n');
 
-        await addMessage(selectedOptionsMessage, "user", 1000);
+        // Only add the message if we have actual requirements
+        if (selectedOptionsMessage !== "Here are my website requirements:") {
+          await addMessage(selectedOptionsMessage, "user", 1000);
+        }
       }
 
       setIsTyping(true);

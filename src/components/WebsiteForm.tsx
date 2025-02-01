@@ -92,13 +92,13 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
     setShowSuccess(false);
     setShowFinalLoading(true);
     
-    // Ensure all form data is passed to ChatInterface
+    // Ensure all form data is properly validated before passing
     const finalFormData = {
-      websiteName: formData.websiteName || '',
-      websiteDescription: formData.websiteDescription || '',
-      category: formData.category || '',
-      goal: formData.goal || '',
-      traffic: formData.traffic || '',
+      websiteName: formData.websiteName || 'Untitled Website',
+      websiteDescription: formData.websiteDescription || 'No description provided',
+      category: formData.category || 'General',
+      goal: formData.goal || 'Not specified',
+      traffic: formData.traffic || 'Not specified',
     };
     
     setTimeout(() => {
