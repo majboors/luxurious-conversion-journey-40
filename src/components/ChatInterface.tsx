@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Loader2, Send, ExternalLink } from "lucide-react";
+import { Loader2, Send, ExternalLink, Check } from "lucide-react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { TypewriterText } from "./TypewriterText";
@@ -134,6 +134,34 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
             </div>
           ))}
         </div>
+        
+        {/* CTA Package - Only shown after example website is sent */}
+        {canType && (
+          <div className="bg-white rounded-xl p-6 shadow-lg animate-fade-in">
+            <h4 className="text-xl font-bold text-primary-DEFAULT mb-4 text-center">
+              Special Offer
+            </h4>
+            <ul className="space-y-3 mb-6">
+              {[
+                "No BS Website",
+                "Instant Website",
+                "You Own It",
+                "5 Free Revisions"
+              ].map((feature, index) => (
+                <li key={feature} className="flex items-center gap-2 text-primary-DEFAULT">
+                  <Check className="h-5 w-5 text-secondary-DEFAULT" />
+                  <span className="text-sm">{feature}</span>
+                </li>
+              ))}
+            </ul>
+            <button 
+              onClick={handleExampleClick}
+              className="w-full bg-secondary-DEFAULT text-secondary-foreground py-3 px-4 rounded-lg font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+            >
+              Buy Now! $15
+            </button>
+          </div>
+        )}
       </div>
       
       <div className="flex-1 flex flex-col">
