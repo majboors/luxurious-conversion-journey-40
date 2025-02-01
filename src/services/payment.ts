@@ -1,10 +1,13 @@
+import { getApiKey } from "@/utils/apiConfig";
+
 export const createPaymentIntent = async () => {
   try {
+    const apiKey = getApiKey();
     const response = await fetch('https://api-v2.ziina.com/api/payment_intent', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${import.meta.env.VITE_ZIINA_API_KEY}`
+        'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
         amount: 1500, // $15.00
@@ -17,6 +20,12 @@ export const createPaymentIntent = async () => {
         transaction_source: "directApi"
       })
     });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Payment API Error:', errorData);
+      throw new Error(errorData.message || 'Payment creation failed');
+    }
 
     const data = await response.json();
     if (data.redirect_url) {
