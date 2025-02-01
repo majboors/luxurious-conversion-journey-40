@@ -118,7 +118,9 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
                     className={`h-6 w-6 absolute top-0 opacity-0 group-hover:opacity-100 transition-all duration-500 transform 
                       ${formData.category === label ? 'translate-y-8 opacity-100' : 'group-hover:translate-y-8'}`}
                   />
-                  <span className="mt-8">{label}</span>
+                  <span className={`text-xl font-bold group-hover:mt-8 transition-all duration-300 ${formData.category === label ? 'mt-8' : ''}`}>
+                    {label}
+                  </span>
                 </div>
               </Button>
             ))}
@@ -144,7 +146,9 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
                     className={`h-6 w-6 absolute top-0 opacity-0 group-hover:opacity-100 transition-all duration-500 transform ${iconColor}
                       ${formData.goal === label ? 'translate-y-8 opacity-100' : 'group-hover:translate-y-8'}`}
                   />
-                  <span className="mt-8">{label}</span>
+                  <span className={`text-xl font-bold group-hover:mt-8 transition-all duration-300 ${formData.goal === label ? 'mt-8' : ''}`}>
+                    {label}
+                  </span>
                 </div>
               </Button>
             ))}
