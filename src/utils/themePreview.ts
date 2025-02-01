@@ -20,7 +20,17 @@ export const getThemePreview = async (formData: Record<string, string>): Promise
       ${formData.traffic ? `We are expecting ${formData.traffic} visitors.` : ''}
     `.trim() : 'No website requirements provided.';
 
+    // Provide fallback data in case of API failure
+    const fallbackData = {
+      search_query: `${formData.category || 'business'} website template`,
+      reasoning: 'Based on your requirements',
+      preview_url: 'https://example.com',
+      plain_description: plainEnglishDescription
+    };
+
     try {
+      console.log('Calling theme preview API with description:', plainEnglishDescription);
+      
       const response = await fetch('https://webdevs.applytocollege.pk/get_theme_preview', {
         method: 'POST',
         headers: {
@@ -32,28 +42,28 @@ export const getThemePreview = async (formData: Record<string, string>): Promise
       });
 
       if (!response.ok) {
-        throw new Error('API request failed');
+        console.log('API Response not OK:', response.status, response.statusText);
+        console.log('Using fallback data');
+        return fallbackData;
       }
 
       const rawResponse = await response.text();
       console.log('Raw API Response:', rawResponse);
 
-      const jsonResponse = JSON.parse(rawResponse);
-      return {
-        ...jsonResponse,
-        raw_response: rawResponse,
-        plain_description: plainEnglishDescription
-      };
-    } catch (error) {
-      console.log('API Error:', error);
-      // Provide fallback values when the API fails
-      return {
-        search_query: formData.websiteName || 'Your Website',
-        reasoning: 'Based on your requirements',
-        preview_url: 'https://example.com',
-        plain_description: plainEnglishDescription,
-        raw_response: JSON.stringify({ error: 'API request failed' })
-      };
+      try {
+        const jsonResponse = JSON.parse(rawResponse);
+        return {
+          ...jsonResponse,
+          raw_response: rawResponse,
+          plain_description: plainEnglishDescription
+        };
+      } catch (parseError) {
+        console.log('Error parsing JSON response:', parseError);
+        return fallbackData;
+      }
+    } catch (apiError) {
+      console.log('API Error:', apiError);
+      return fallbackData;
     }
   } catch (error) {
     console.error('Error getting theme preview:', error);
