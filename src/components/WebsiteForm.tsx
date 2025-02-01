@@ -52,6 +52,7 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
       setCurrentStep((prev) => prev + 1);
     } else {
       setShowLoading(true);
+      onOpenChange(false); // Close the dialog when showing loading screen
       // Simulate API call or processing time
       setTimeout(() => {
         console.log("Form completed:", formData);
