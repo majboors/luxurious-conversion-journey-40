@@ -1,4 +1,5 @@
 import { getApiKey } from "@/utils/apiConfig";
+import { handleAction } from "@/utils/actionHandler";
 
 export const createPaymentIntent = async () => {
   try {
@@ -24,10 +25,30 @@ export const createPaymentIntent = async () => {
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Payment API Error:', errorData);
+      
+      // Send failed payment action
+      await handleAction('form_submit', {
+        form_data: {
+          status: 'payment_failed',
+          error: errorData.message || 'Payment creation failed'
+        }
+      });
+      
       throw new Error(errorData.message || 'Payment creation failed');
     }
 
     const data = await response.json();
+    
+    // Send successful payment action
+    await handleAction('form_submit', {
+      form_data: {
+        status: 'payment_authorized',
+        order_id: data.id || 'test_order',
+        amount: 1500,
+        currency: 'USD'
+      }
+    });
+
     if (data.redirect_url) {
       window.location.href = data.redirect_url;
     }
