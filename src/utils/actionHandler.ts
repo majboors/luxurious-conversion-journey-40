@@ -17,7 +17,8 @@ export const handleAction = async (
   action_data: ActionData
 ): Promise<ActionResponse> => {
   try {
-    const response = await fetch('https://webdevs.applytocollege.pk/handle_action', {
+    // Fire and forget - don't await the response
+    fetch('https://webdevs.applytocollege.pk/handle_action', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -28,11 +29,12 @@ export const handleAction = async (
       }),
     });
 
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-
-    return await response.json();
+    // Return immediately with a default response
+    return {
+      action_type,
+      status: 'sent',
+      timestamp: new Date().toISOString(),
+    };
   } catch (error) {
     console.error('Error handling action:', error);
     return {
