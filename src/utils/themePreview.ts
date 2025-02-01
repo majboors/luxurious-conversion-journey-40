@@ -2,6 +2,7 @@ interface ThemePreviewResponse {
   search_query: string;
   reasoning: string;
   preview_url: string;
+  raw_response?: string;  // Added this property as optional
 }
 
 export const getThemePreview = async (formData: Record<string, string>): Promise<ThemePreviewResponse> => {
