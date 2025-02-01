@@ -256,10 +256,14 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
                 <Button
                   key={option}
                   variant={formData.traffic === option ? "default" : "outline"}
-                  className="h-16 hover:scale-105 transition-all duration-300"
+                  className="min-h-[96px] hover:scale-105 transition-all duration-300 relative group"
                   onClick={() => setFormData({ ...formData, traffic: option })}
                 >
-                  {option}
+                  <div className="flex flex-col items-center justify-center w-full h-full p-2">
+                    <span className="text-sm sm:text-base font-bold text-center break-words">
+                      {option}
+                    </span>
+                  </div>
                 </Button>
               )
             )}
