@@ -23,6 +23,7 @@ const Index = () => {
             <ChatInterface
               formData={{
                 websiteName: "",
+                websiteDescription: "",
                 category: "",
                 goal: "",
                 traffic: ""
