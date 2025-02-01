@@ -5,29 +5,10 @@ import { useTheme } from "next-themes";
 import { useState } from "react";
 import { WebsiteForm } from "./WebsiteForm";
 
-export const Hero = ({ isChatActive = false }) => {
-  const words = [
-    "We'll build your website lightning fast!",
-    "Expert developers at your service",
-    "Quality code, delivered quickly",
-    "Your vision, our expertise",
-    "Professional web solutions"
-  ];
+export const Hero = () => {
+  const words = ["Rich", "Famous", "Successful", "Profitable", "Unstoppable"];
   const { theme, setTheme } = useTheme();
   const [showForm, setShowForm] = useState(false);
-
-  if (isChatActive) {
-    return (
-      <div className="w-full max-w-2xl mx-auto text-center py-8 animate-fade-in">
-        <h2 className="text-2xl md:text-3xl font-bold mb-4 text-foreground">
-          You are talking to one of our best developers!
-        </h2>
-        <div className="text-xl text-foreground/80">
-          <TypewriterText words={words} delay={3000} />
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-primary-DEFAULT to-accent-DEFAULT p-4 relative">
@@ -47,7 +28,7 @@ export const Hero = ({ isChatActive = false }) => {
       <div className="max-w-4xl mx-auto text-center space-y-12 animate-fade-in">
         {/* Main Headline */}
         <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-foreground">
-          Get <TypewriterText words={["Rich", "Famous", "Successful", "Profitable", "Unstoppable"]} delay={2000} /> <br />
+          Get <TypewriterText words={words} delay={2000} /> <br />
           Get a website.
         </h1>
 
@@ -64,6 +45,20 @@ export const Hero = ({ isChatActive = false }) => {
         >
           Get Your Website Now for 15 USD
         </Button>
+
+        {/* Secondary CTAs */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
+          {["Start Building", "I Want My Site", "Begin Now"].map((text, index) => (
+            <Button
+              key={index}
+              variant="outline"
+              onClick={() => setShowForm(true)}
+              className="border-foreground/20 hover:bg-foreground/10 text-foreground text-lg py-6 transform hover:scale-105 transition-all duration-300 hover:border-foreground/40 hover:shadow-md"
+            >
+              {text}
+            </Button>
+          ))}
+        </div>
       </div>
 
       <WebsiteForm open={showForm} onOpenChange={setShowForm} />
