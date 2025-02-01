@@ -59,16 +59,18 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
 
   useEffect(() => {
     const initializeChat = async () => {
-      // First message with selected options
-      const selectedOptionsMessage = [
-        "Here are my website requirements:",
-        `Website Name: ${formData.websiteName}`,
-        `Category: ${formData.category}`,
-        `Goal: ${formData.goal}`,
-        `Expected Traffic: ${formData.traffic}`
-      ].join('\n');
+      // First message with selected options - only add if values exist
+      if (formData.websiteName || formData.category || formData.goal || formData.traffic) {
+        const selectedOptionsMessage = [
+          "Here are my website requirements:",
+          `Website Name: ${formData.websiteName || 'Not specified'}`,
+          `Category: ${formData.category || 'Not specified'}`,
+          `Goal: ${formData.goal || 'Not specified'}`,
+          `Expected Traffic: ${formData.traffic || 'Not specified'}`
+        ].join('\n');
 
-      await addMessage(selectedOptionsMessage, "user", 1000);
+        await addMessage(selectedOptionsMessage, "user", 1000);
+      }
 
       setIsTyping(true);
       await addMessage("Assalamualaikum, I'm on the project.", "developer", 2000);
@@ -87,7 +89,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
       await new Promise(resolve => setTimeout(resolve, 10000));
 
       await addMessage(
-        `View your example website: ${formData.websiteName}`,
+        `View your example website: ${formData.websiteName || 'Your Website'}`,
         "developer",
         0,
         true
