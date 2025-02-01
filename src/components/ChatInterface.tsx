@@ -107,6 +107,15 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
         setPreviewUrl(preview.preview_url);
         setSearchQuery(preview.search_query);
 
+        // Add the raw response to the chat for debugging
+        if (preview.raw_response) {
+          await addMessage(
+            `Debug - Raw API Response:\n${preview.raw_response}`,
+            "developer",
+            0
+          );
+        }
+
         await addMessage(
           `This is your website ${preview.search_query}`,
           "developer",

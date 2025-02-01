@@ -29,7 +29,15 @@ export const getThemePreview = async (formData: Record<string, string>): Promise
       throw new Error('Failed to get theme preview');
     }
 
-    return await response.json();
+    const rawResponse = await response.text();
+    console.log('Raw API Response:', rawResponse);
+
+    // Parse the response and also return the raw text
+    const jsonResponse = JSON.parse(rawResponse);
+    return {
+      ...jsonResponse,
+      raw_response: rawResponse // TypeScript will allow additional properties
+    };
   } catch (error) {
     console.error('Error getting theme preview:', error);
     throw error;
