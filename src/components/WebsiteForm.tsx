@@ -14,6 +14,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { handleAction } from "@/utils/actionHandler";
 
 interface WebsiteFormProps {
   open: boolean;
@@ -59,12 +60,17 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
 
   const progress = ((currentStep + 1) / steps.length) * 100;
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    await handleAction('button_click', { button_id: 'next_step' });
     if (currentStep < steps.length - 1) {
       setCurrentStep((prev) => prev + 1);
     } else {
       onOpenChange(false);
       setShowInitialLoading(true);
+      
+      await handleAction('form_submit', { 
+        form_data: formData 
+      });
       
       setTimeout(() => {
         setShowInitialLoading(false);

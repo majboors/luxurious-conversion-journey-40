@@ -4,6 +4,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { TypewriterText } from "./TypewriterText";
 import { toast } from "./ui/use-toast";
+import { handleAction } from "@/utils/actionHandler";
 
 interface ChatInterfaceProps {
   formData: {
@@ -36,7 +37,8 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
     "Making your vision reality"
   ];
 
-  const handleExampleClick = () => {
+  const handleExampleClick = async () => {
+    await handleAction('button_click', { button_id: 'example_website' });
     toast({
       title: "Example Website",
       description: "Opening example website preview...",
@@ -44,14 +46,18 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
     window.open('https://example.com', '_blank');
   };
 
-  const redirectToWhatsApp = (message: string) => {
+  const redirectToWhatsApp = async (message: string) => {
+    await handleAction('button_click', { button_id: 'whatsapp_redirect' });
     const baseUrl = "https://api.whatsapp.com/send/?phone=923461115757";
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `${baseUrl}&text=${encodedMessage}&type=phone_number&app_absent=0`;
     window.open(whatsappUrl, '_blank');
   };
 
-  const addMessage = (text: string, sender: "developer" | "user", delay: number, isLink: boolean = false) => {
+  const addMessage = async (text: string, sender: "developer" | "user", delay: number, isLink: boolean = false) => {
+    if (sender === "user") {
+      await handleAction('text_input', { text });
+    }
     return new Promise<void>((resolve) => {
       setTimeout(() => {
         setMessages(prev => [...prev, {
@@ -107,12 +113,19 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
     initializeChat();
   }, [formData]);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (inputMessage.trim() && canType) {
-      addMessage(inputMessage, "user", 0);
+      await handleAction('text_input', { text: inputMessage });
+      await addMessage(inputMessage, "user", 0);
       redirectToWhatsApp(inputMessage);
       setInputMessage("");
     }
+  };
+
+  const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const text = e.target.value;
+    setInputMessage(text);
+    await handleAction('text_input', { text });
   };
 
   return (
@@ -229,7 +242,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
           <div className="flex gap-2">
             <Input
               value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
+              onChange={handleInputChange}
               placeholder={canType ? "Type your message..." : "Please wait for developer..."}
               className="flex-1"
               onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
