@@ -80,6 +80,8 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
     setTimeout(() => {
       setShowFinalLoading(false);
       setShowChat(true);
+      // Close the form dialog completely
+      onOpenChange(false);
     }, 3000);
   };
 
