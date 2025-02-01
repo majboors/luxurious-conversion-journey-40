@@ -8,7 +8,7 @@ export const Hero = () => {
   const { theme, setTheme } = useTheme();
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-primary-DEFAULT to-accent-DEFAULT text-white p-4 relative">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-primary-DEFAULT to-accent-DEFAULT p-4 relative">
       {/* Theme Toggle */}
       <button
         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -24,13 +24,13 @@ export const Hero = () => {
 
       <div className="max-w-4xl mx-auto text-center space-y-12 animate-fade-in">
         {/* Main Headline */}
-        <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
+        <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-foreground">
           Get <TypewriterText words={words} delay={2000} /> <br />
           Get a website.
         </h1>
 
         {/* Subheadline */}
-        <p className="text-xl md:text-2xl mb-12 text-gray-300">
+        <p className="text-xl md:text-2xl mb-12 text-foreground/80">
           Your professional website is just one click away
         </p>
 
@@ -48,7 +48,7 @@ export const Hero = () => {
             <Button
               key={index}
               variant="outline"
-              className="text-white border-white/20 hover:bg-white/10"
+              className="border-foreground/20 hover:bg-foreground/10 text-foreground"
             >
               {text}
             </Button>
