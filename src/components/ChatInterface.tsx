@@ -33,6 +33,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
   const [canType, setCanType] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   const words = [
     "Building your dream website",
@@ -50,6 +51,15 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
     });
     window.open(previewUrl || 'https://example.com', '_blank');
   };
+
+  useEffect(() => {
+    // Auto-collapse sidebar after a delay when chat is shown
+    const timer = setTimeout(() => {
+      setIsSidebarCollapsed(true);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const redirectToWhatsApp = async (message: string) => {
     await handleAction('button_click', { button_id: 'whatsapp_redirect' });
@@ -167,7 +177,12 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
 
   return (
     <div className="flex h-screen bg-background">
-      <div id="benefits-sidebar" className="w-[30%] min-w-[280px] border-r border-border bg-primary/5 p-4 flex flex-col space-y-4 animate-slide-in-right overflow-y-auto">
+      <div 
+        id="benefits-sidebar" 
+        className={`transition-all duration-300 ease-in-out ${
+          isSidebarCollapsed ? 'w-0 opacity-0 overflow-hidden' : 'w-[30%] min-w-[280px]'
+        } border-r border-border bg-primary/5 p-4 flex flex-col space-y-4 animate-slide-in-right overflow-y-auto`}
+      >
         {canType && (
           <div className="bg-white rounded-xl p-4 shadow-lg animate-fade-in space-y-4">
             <h4 className="text-xl font-bold text-primary-DEFAULT text-center leading-tight">
@@ -196,7 +211,9 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
         )}
       </div>
       
-      <div className="flex-1 flex flex-col">
+      <div className={`transition-all duration-300 ease-in-out ${
+        isSidebarCollapsed ? 'flex-1' : 'w-[70%]'
+      } flex flex-col`}>
         <div className="flex items-center gap-3 p-4 border-b border-border bg-primary/5">
           <div className="w-10 h-10 rounded-full overflow-hidden">
             <img
