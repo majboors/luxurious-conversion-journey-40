@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Loader2, Send } from "lucide-react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { TypewriterText } from "./TypewriterText";
 
 interface ChatInterfaceProps {
   formData: {
@@ -23,6 +24,14 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [inputMessage, setInputMessage] = useState("");
+
+  const words = [
+    "We'll build your website lightning fast!",
+    "Expert developers at your service",
+    "Quality code, delivered quickly",
+    "Your vision, our expertise",
+    "Professional web solutions"
+  ];
 
   const addMessage = (text: string, sender: "developer" | "user", delay: number) => {
     return new Promise<void>((resolve) => {
@@ -59,7 +68,6 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
       );
       setIsTyping(false);
 
-      // Add example link
       await addMessage(
         `View your example website: ${formData.websiteName}`,
         "developer",
@@ -78,19 +86,14 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
   };
 
   return (
-    <div className="flex flex-col h-[600px] bg-background rounded-lg shadow-lg border border-border">
-      {/* Chat Header */}
-      <div className="flex items-center gap-3 p-4 border-b border-border bg-primary/5">
-        <div className="w-10 h-10 rounded-full overflow-hidden">
-          <img
-            src="https://www.aurumbureau.com/wp-content/uploads/2020/11/Aurum-Speakers-Bureau-Samy-Kamkar.jpg"
-            alt="Developer"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div>
-          <h3 className="font-semibold">Samy Kamkar</h3>
-          <p className="text-sm text-muted-foreground">Full Stack Developer</p>
+    <div className="flex flex-col h-screen max-w-3xl mx-auto bg-background animate-fade-in">
+      {/* Chat Header with Typewriter */}
+      <div className="text-center py-8 border-b border-border">
+        <h2 className="text-2xl md:text-3xl font-bold mb-4 text-foreground">
+          You are talking to one of our best developers!
+        </h2>
+        <div className="text-xl text-foreground/80">
+          <TypewriterText words={words} delay={3000} />
         </div>
       </div>
 
