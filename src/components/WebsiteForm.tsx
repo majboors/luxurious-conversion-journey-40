@@ -92,11 +92,22 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
     setShowSuccess(false);
     setShowFinalLoading(true);
     
+    // Ensure all form data is passed to ChatInterface
+    const finalFormData = {
+      websiteName: formData.websiteName || '',
+      websiteDescription: formData.websiteDescription || '',
+      category: formData.category || '',
+      goal: formData.goal || '',
+      traffic: formData.traffic || '',
+    };
+    
     setTimeout(() => {
       setShowFinalLoading(false);
       setShowChat(true);
       onOpenChange(false);
-      const event = new CustomEvent('showChat', { detail: true });
+      const event = new CustomEvent('showChat', { 
+        detail: { formData: finalFormData } 
+      });
       window.dispatchEvent(event);
     }, 3000);
   };

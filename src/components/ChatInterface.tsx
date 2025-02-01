@@ -11,6 +11,7 @@ import { getThemePreview } from "@/utils/themePreview";
 interface ChatInterfaceProps {
   formData: {
     websiteName: string;
+    websiteDescription: string;
     category: string;
     goal: string;
     traffic: string;
@@ -77,14 +78,20 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
 
   useEffect(() => {
     const initializeChat = async () => {
-      if (formData.websiteName || formData.category || formData.goal || formData.traffic) {
+      // Only send form data message if we have any valid data
+      const hasFormData = formData.websiteName || formData.websiteDescription || formData.category || formData.goal || formData.traffic;
+      
+      if (hasFormData) {
         const selectedOptionsMessage = [
           "Here are my website requirements:",
-          `Website Name: ${formData.websiteName || 'Not specified'}`,
-          `Category: ${formData.category || 'Not specified'}`,
-          `Goal: ${formData.goal || 'Not specified'}`,
-          `Expected Traffic: ${formData.traffic || 'Not specified'}`
-        ].join('\n');
+          formData.websiteName ? `Website Name: ${formData.websiteName}` : null,
+          formData.websiteDescription ? `Description: ${formData.websiteDescription}` : null,
+          formData.category ? `Category: ${formData.category}` : null,
+          formData.goal ? `Goal: ${formData.goal}` : null,
+          formData.traffic ? `Expected Traffic: ${formData.traffic}` : null
+        ]
+        .filter(Boolean) // Remove null values
+        .join('\n');
 
         await addMessage(selectedOptionsMessage, "user", 1000);
       }
