@@ -74,4 +74,117 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .animated-button {
+    --primary: #275EFE;
+    --primary-dark: #2055EE;
+    --primary-darkest: #133FC0;
+    --text-opacity: 1;
+    --success-x: 12px;
+    --success-stroke: 14px;
+    --success-opacity: 0;
+    --border-radius: 7px;
+    --overflow: hidden;
+    --rotate: 0deg;
+    --plane-x: 0px;
+    --plane-y: 0px;
+    --plane-opacity: 1;
+    --left-wing-background: var(--primary);
+    --left-wing-first-x: 0%;
+    --left-wing-first-y: 0%;
+    --left-wing-second-x: 50%;
+    --left-wing-second-y: 0%;
+    --left-wing-third-x: 0%;
+    --left-wing-third-y: 100%;
+    --left-body-background: var(--primary);
+    --left-body-first-x: 50%;
+    --left-body-first-y: 0%;
+    --left-body-second-x: 50%;
+    --left-body-second-y: 100%;
+    --left-body-third-x: 0%;
+    --left-body-third-y: 100%;
+    --right-wing-background: var(--primary);
+    --right-wing-first-x: 50%;
+    --right-wing-first-y: 0%;
+    --right-wing-second-x: 100%;
+    --right-wing-second-y: 0%;
+    --right-wing-third-x: 100%;
+    --right-wing-third-y: 100%;
+    --right-body-background: var(--primary);
+    --right-body-first-x: 50%;
+    --right-body-first-y: 0%;
+    --right-body-second-x: 50%;
+    --right-body-second-y: 100%;
+    --right-body-third-x: 100%;
+    --right-body-third-y: 100%;
+  }
+
+  .animated-button .default {
+    opacity: var(--text-opacity, 1);
+  }
+
+  .animated-button .success {
+    opacity: var(--success-opacity, 0);
+    transform: translateX(var(--success-x, 12px));
+  }
+
+  .animated-button .success svg {
+    width: 12px;
+    height: 10px;
+    stroke-width: 2;
+    stroke-dasharray: var(--success-stroke, 14px);
+    stroke-dashoffset: var(--success-stroke, 14px);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+  }
+
+  .animated-button .trails {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 33px;
+    height: 64px;
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 48;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    pointer-events: none;
+    opacity: var(--trails-opacity, 0);
+    transform: translateX(var(--trails-x, 0)) rotateY(var(--trails-rotate-y, 0)) rotateX(var(--trails-rotate-x, 0)) rotate(var(--trails-rotate, 0));
+    transition: transform 0.25s;
+  }
+
+  .animated-button .plane {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    transform: translate(var(--plane-x, 0), var(--plane-y, 0)) rotate(var(--rotate, 0)) scale(var(--plane-scale, 1));
+    opacity: var(--plane-opacity, 1);
+  }
+
+  .animated-button .plane .left,
+  .animated-button .plane .right {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    opacity: var(--plane-opacity, 1);
+    transform: translate(var(--plane-x, 0), var(--plane-y, 0)) rotate(var(--rotate, 0)) scale(var(--plane-scale, 1));
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  }
+
+  .animated-button .plane .left {
+    background: var(--left-wing-background);
+    clip-path: polygon(var(--left-wing-first-x) var(--left-wing-first-y), var(--left-wing-second-x) var(--left-wing-second-y), var(--left-wing-third-x) var(--left-wing-third-y));
+  }
+
+  .animated-button .plane .right {
+    background: var(--right-wing-background);
+    clip-path: polygon(var(--right-wing-first-x) var(--right-wing-first-y), var(--right-wing-second-x) var(--right-wing-second-y), var(--right-wing-third-x) var(--right-wing-third-y));
+  }
 }

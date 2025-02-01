@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Calendar, BookOpen, Image, DollarSign, Megaphone, Users, Target, ChevronRight, Linkedin } from "lucide-react";
 import { LoadingScreen } from "./LoadingScreen";
+import { AnimatedButton } from "@/components/ui/animated-button";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -217,12 +218,12 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
                   <Linkedin className="w-5 h-5" />
                   <span>View LinkedIn Profile</span>
                 </a>
-                <Button 
+                <AnimatedButton 
                   onClick={handleSuccessClose}
                   className="mt-4 w-full"
                 >
                   Continue
-                </Button>
+                </AnimatedButton>
               </div>
             </AlertDialogDescription>
           </AlertDialogHeader>
