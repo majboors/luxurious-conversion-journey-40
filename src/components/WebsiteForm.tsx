@@ -95,12 +95,36 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
     setTimeout(() => {
       setShowFinalLoading(false);
       setShowChat(true);
-      // Close the form dialog completely
       onOpenChange(false);
-      // Find the closest parent with showChat state and update it
       const event = new CustomEvent('showChat', { detail: true });
       window.dispatchEvent(event);
     }, 3000);
+  };
+
+  const handleCategoryChange = (category: string) => {
+    setFormData(prev => ({ ...prev, category }));
+    if (category !== "Others") {
+      setCustomCategory("");
+    }
+  };
+
+  const handleGoalChange = (goal: string) => {
+    setFormData(prev => ({ ...prev, goal }));
+    if (goal !== "Others") {
+      setCustomGoal("");
+    }
+  };
+
+  const handleCustomCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setCustomCategory(value);
+    setFormData(prev => ({ ...prev, category: value }));
+  };
+
+  const handleCustomGoalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setCustomGoal(value);
+    setFormData(prev => ({ ...prev, goal: value }));
   };
 
   const renderStep = () => {
@@ -144,16 +168,16 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
               ].map(({ icon: Icon, label, hoverBg }) => (
                 <Button
                   key={label}
-                  variant={formData.category === label ? "default" : "outline"}
+                  variant={formData.category === label || (label === "Others" && customCategory) ? "default" : "outline"}
                   className={`h-24 relative group ${hoverBg} transition-colors duration-300`}
-                  onClick={() => setFormData({ ...formData, category: label })}
+                  onClick={() => handleCategoryChange(label)}
                 >
                   <div className="flex flex-col items-center justify-center w-full h-full">
                     <Icon 
                       className={`h-6 w-6 absolute top-0 opacity-0 group-hover:opacity-100 transition-all duration-500 transform 
-                        ${formData.category === label ? 'translate-y-8 opacity-100' : 'group-hover:translate-y-8'}`}
+                        ${(formData.category === label || (label === "Others" && customCategory)) ? 'translate-y-8 opacity-100' : 'group-hover:translate-y-8'}`}
                     />
-                    <span className={`text-xl font-bold group-hover:mt-8 transition-all duration-300 ${formData.category === label ? 'mt-8' : ''}`}>
+                    <span className={`text-xl font-bold group-hover:mt-8 transition-all duration-300 ${(formData.category === label || (label === "Others" && customCategory)) ? 'mt-8' : ''}`}>
                       {label}
                     </span>
                   </div>
@@ -164,10 +188,7 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
               <Input
                 placeholder="Enter your category..."
                 value={customCategory}
-                onChange={(e) => {
-                  setCustomCategory(e.target.value);
-                  setFormData({ ...formData, category: e.target.value });
-                }}
+                onChange={handleCustomCategoryChange}
                 className="mt-4"
               />
             )}
@@ -186,16 +207,16 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
               ].map(({ icon: Icon, label, hoverBg, iconColor }) => (
                 <Button
                   key={label}
-                  variant={formData.goal === label ? "default" : "outline"}
+                  variant={formData.goal === label || (label === "Others" && customGoal) ? "default" : "outline"}
                   className={`h-24 relative group ${hoverBg} transition-all duration-300`}
-                  onClick={() => setFormData({ ...formData, goal: label })}
+                  onClick={() => handleGoalChange(label)}
                 >
                   <div className="flex flex-col items-center justify-center w-full h-full">
                     <Icon 
                       className={`h-6 w-6 absolute top-0 opacity-0 group-hover:opacity-100 transition-all duration-500 transform ${iconColor}
-                        ${formData.goal === label ? 'translate-y-8 opacity-100' : 'group-hover:translate-y-8'}`}
+                        ${(formData.goal === label || (label === "Others" && customGoal)) ? 'translate-y-8 opacity-100' : 'group-hover:translate-y-8'}`}
                     />
-                    <span className={`text-xl font-bold group-hover:mt-8 transition-all duration-300 ${formData.goal === label ? 'mt-8' : ''}`}>
+                    <span className={`text-xl font-bold group-hover:mt-8 transition-all duration-300 ${(formData.goal === label || (label === "Others" && customGoal)) ? 'mt-8' : ''}`}>
                       {label}
                     </span>
                   </div>
@@ -206,10 +227,7 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
               <Input
                 placeholder="Enter your goal..."
                 value={customGoal}
-                onChange={(e) => {
-                  setCustomGoal(e.target.value);
-                  setFormData({ ...formData, goal: e.target.value });
-                }}
+                onChange={handleCustomGoalChange}
                 className="mt-4"
               />
             )}
