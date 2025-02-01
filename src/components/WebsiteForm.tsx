@@ -223,15 +223,15 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
                 <Button
                   key={label}
                   variant={(label === "Others" && customGoal !== "") || formData.goal === label ? "default" : "outline"}
-                  className={`h-24 relative group ${hoverBg} transition-all duration-300`}
+                  className={`min-h-[96px] relative group ${hoverBg} transition-all duration-300`}
                   onClick={() => handleGoalChange(label)}
                 >
-                  <div className="flex flex-col items-center justify-center w-full h-full">
+                  <div className="flex flex-col items-center justify-center w-full h-full p-2">
                     <Icon 
                       className={`h-6 w-6 absolute top-0 opacity-0 group-hover:opacity-100 transition-all duration-500 transform ${iconColor}
                         ${(label === "Others" && customGoal !== "") || formData.goal === label ? 'translate-y-8 opacity-100' : 'group-hover:translate-y-8'}`}
                     />
-                    <span className={`text-xl font-bold group-hover:mt-8 transition-all duration-300 ${(label === "Others" && customGoal !== "") || formData.goal === label ? 'mt-8' : ''}`}>
+                    <span className={`text-sm sm:text-base font-bold text-center break-words group-hover:mt-8 transition-all duration-300 ${(label === "Others" && customGoal !== "") || formData.goal === label ? 'mt-8' : ''}`}>
                       {label}
                     </span>
                   </div>
