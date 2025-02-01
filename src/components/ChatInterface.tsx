@@ -167,20 +167,20 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
 
   return (
     <div className="flex h-screen bg-background">
-      <div id="benefits-sidebar" className="w-1/4 min-w-[250px] border-r border-border bg-primary/5 p-6 flex flex-col space-y-6 animate-slide-in-right overflow-y-auto">
+      <div id="benefits-sidebar" className="w-[30%] min-w-[280px] border-r border-border bg-primary/5 p-4 flex flex-col space-y-4 animate-slide-in-right overflow-y-auto">
         {canType && (
-          <div className="bg-white rounded-xl p-6 shadow-lg animate-fade-in space-y-6">
+          <div className="bg-white rounded-xl p-4 shadow-lg animate-fade-in space-y-4">
             <h4 className="text-xl font-bold text-primary-DEFAULT text-center leading-tight">
               Special Offer
             </h4>
-            <ul className="space-y-4">
+            <ul className="space-y-3">
               {[
                 "Professional Design",
                 "Fast Development",
                 "SEO Optimized",
                 "5 Free Revisions"
               ].map((feature, index) => (
-                <li key={feature} className="flex items-start gap-3 text-primary-DEFAULT">
+                <li key={feature} className="flex items-start gap-2 text-primary-DEFAULT">
                   <Check className="h-5 w-5 text-secondary-DEFAULT flex-shrink-0 mt-0.5" />
                   <span className="text-sm break-words leading-tight">{feature}</span>
                 </li>
@@ -188,7 +188,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
             </ul>
             <button 
               onClick={handleExampleClick}
-              className="w-full bg-secondary-DEFAULT text-secondary-foreground py-3 px-4 rounded-lg font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+              className="w-full bg-secondary-DEFAULT text-secondary-foreground py-2 px-4 rounded-lg font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
             >
               Buy Now! $15
             </button>
