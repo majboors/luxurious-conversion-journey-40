@@ -256,8 +256,23 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
         </AlertDialogContent>
       </AlertDialog>
 
-      {showInitialLoading && <LoadingScreen />}
-      {showFinalLoading && <LoadingScreen />}
+      {showInitialLoading && (
+        <LoadingScreen messages={["Finding developer..."]} />
+      )}
+      {showFinalLoading && (
+        <LoadingScreen messages={[
+          "Sending your project...",
+          "Making sure developer is trained...",
+          "Preparing project requirements...",
+          "Setting up development environment...",
+          "Initializing project workspace...",
+          "Configuring development tools...",
+          "Loading project specifications...",
+          "Analyzing project scope...",
+          "Getting everything ready..."
+        ]} />
+      )}
+      {showChat && <ChatInterface formData={formData} />}
     </>
   );
 };
