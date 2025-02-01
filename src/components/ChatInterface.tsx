@@ -43,6 +43,13 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
     window.open('https://example.com', '_blank');
   };
 
+  const redirectToWhatsApp = (message: string) => {
+    const baseUrl = "https://api.whatsapp.com/send/?phone=923461115757";
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `${baseUrl}&text=${encodedMessage}&type=phone_number&app_absent=0`;
+    window.open(whatsappUrl, '_blank');
+  };
+
   const addMessage = (text: string, sender: "developer" | "user", delay: number, isLink: boolean = false) => {
     return new Promise<void>((resolve) => {
       setTimeout(() => {
@@ -102,13 +109,15 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
   const handleSendMessage = () => {
     if (inputMessage.trim()) {
       addMessage(inputMessage, "user", 0);
+      redirectToWhatsApp(inputMessage);
       setInputMessage("");
     }
   };
 
+  // ... keep existing code (return JSX)
+
   return (
     <div className="flex h-screen bg-background">
-      {/* Side Panel with Animations */}
       <div className="w-1/4 border-r border-border bg-primary/5 p-4 flex flex-col space-y-8 animate-slide-in-right">
         <div className="text-center">
           <h3 className="text-lg font-semibold text-secondary-DEFAULT mb-2">
@@ -127,10 +136,9 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
           ))}
         </div>
       </div>
-
+      
       {/* Main Chat Interface */}
       <div className="flex-1 flex flex-col">
-        {/* Chat Header */}
         <div className="flex items-center gap-3 p-4 border-b border-border bg-primary/5">
           <div className="w-10 h-10 rounded-full overflow-hidden">
             <img
