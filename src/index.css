@@ -77,6 +77,6 @@
 
   /* Add specific light mode text colors */
   :root:not(.dark) .text-white {
-    @apply text-primary-DEFAULT;
+    color: #1A1F2C;
   }
 }
