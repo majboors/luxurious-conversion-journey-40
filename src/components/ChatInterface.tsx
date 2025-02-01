@@ -142,6 +142,13 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
           0,
           true
         );
+
+        // Add the notification about the price
+        toast({
+          title: "Special Offer!",
+          description: "Get this professional website for only $15! Limited time offer.",
+          duration: 5000,
+        });
       } catch (error) {
         console.error('Failed to get theme preview:', error);
         await addMessage(
