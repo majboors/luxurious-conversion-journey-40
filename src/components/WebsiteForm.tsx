@@ -15,6 +15,11 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
+interface WebsiteFormProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
 interface FormStep {
   title: string;
   description: string;
