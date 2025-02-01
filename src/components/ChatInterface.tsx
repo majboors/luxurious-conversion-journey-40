@@ -6,6 +6,7 @@ import { TypewriterText } from "./TypewriterText";
 import { toast } from "./ui/use-toast";
 import { handleAction } from "@/utils/actionHandler";
 import { useScrollTracking } from "@/hooks/useScrollTracking";
+import { getThemePreview } from "@/utils/themePreview";
 
 interface ChatInterfaceProps {
   formData: {
@@ -29,6 +30,8 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
   const [isTyping, setIsTyping] = useState(false);
   const [inputMessage, setInputMessage] = useState("");
   const [canType, setCanType] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const words = [
     "Building your dream website",
@@ -44,7 +47,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
       title: "Example Website",
       description: "Opening example website preview...",
     });
-    window.open('https://example.com', '_blank');
+    window.open(previewUrl || 'https://example.com', '_blank');
   };
 
   const redirectToWhatsApp = async (message: string) => {
@@ -99,14 +102,26 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
       );
       setIsTyping(false);
 
-      await new Promise(resolve => setTimeout(resolve, 10000));
+      try {
+        const preview = await getThemePreview(formData);
+        setPreviewUrl(preview.preview_url);
+        setSearchQuery(preview.search_query);
 
-      await addMessage(
-        `View your example website: ${formData.websiteName || 'Your Website'}`,
-        "developer",
-        0,
-        true
-      );
+        await addMessage(
+          `This is your website ${preview.search_query}`,
+          "developer",
+          0,
+          true
+        );
+      } catch (error) {
+        console.error('Failed to get theme preview:', error);
+        await addMessage(
+          `View your example website: ${formData.websiteName || 'Your Website'}`,
+          "developer",
+          0,
+          true
+        );
+      }
       
       setCanType(true);
     };
