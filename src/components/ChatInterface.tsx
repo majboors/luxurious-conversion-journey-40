@@ -78,7 +78,6 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
 
   useEffect(() => {
     const initializeChat = async () => {
-      // Check if we have any valid form data
       const hasFormData = Object.values(formData).some(value => value && value.trim() !== '');
       
       if (hasFormData) {
@@ -90,10 +89,9 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
           formData.goal ? `Goal: ${formData.goal}` : null,
           formData.traffic ? `Expected Traffic: ${formData.traffic}` : null
         ]
-        .filter(Boolean) // Remove null values
+        .filter(Boolean)
         .join('\n');
 
-        // Only add the message if we have actual requirements
         if (selectedOptionsMessage !== "Here are my website requirements:") {
           await addMessage(selectedOptionsMessage, "user", 1000);
         }
@@ -121,15 +119,6 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
         if (preview.plain_description) {
           await addMessage(
             `Here's how I understood your requirements:\n${preview.plain_description}`,
-            "developer",
-            0
-          );
-        }
-
-        // Add the raw response to the chat for debugging
-        if (preview.raw_response) {
-          await addMessage(
-            `Debug - Raw API Response:\n${preview.raw_response}`,
             "developer",
             0
           );
