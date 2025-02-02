@@ -45,29 +45,26 @@ const getFallbackData = (formData: Record<string, string>, reason: string): Them
 };
 
 const constructPlainDescription = (formData: Record<string, string>): string => {
-  const hasValidData = formData.websiteName || formData.websiteDescription || formData.category || formData.goal || formData.traffic;
-
-  // Construct a natural language description that focuses on the business aspects
+  // Convert form data into a natural business description
   let description = '';
   
+  if (formData.websiteName) {
+    description += `I run ${formData.websiteName}`;
+  }
+  
   if (formData.websiteDescription) {
-    description += formData.websiteDescription;
+    description += description ? ` which ${formData.websiteDescription}` : `I run a business that ${formData.websiteDescription}`;
   }
   
   if (formData.category) {
-    description += ` This is a ${formData.category.toLowerCase()} website.`;
-  }
-  
-  if (formData.goal) {
-    description += ` The goal is to ${formData.goal.toLowerCase()}.`;
+    description += `. It's in the ${formData.category.toLowerCase()} industry`;
   }
 
-  return description.trim() || 'No website requirements provided.';
+  return description.trim() || 'I run a business website';
 };
 
 export const getThemePreview = async (formData: Record<string, string>): Promise<ThemePreviewResponse> => {
   try {
-    // Construct a natural language description for the API
     const description = constructPlainDescription(formData);
     console.log('Sending description to API:', description);
     
