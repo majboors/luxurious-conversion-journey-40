@@ -24,7 +24,7 @@ export const WhatsAppChat = () => {
 
   return (
     <>
-      <div id="whatsapp-chat" className={`fixed bottom-24 right-12 z-50 w-[360px] bg-white rounded-lg shadow-2xl transform transition-all duration-300 ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none'}`}>
+      <div id="whatsapp-chat" className={`fixed bottom-24 left-12 z-50 w-[360px] bg-white rounded-lg shadow-2xl transform transition-all duration-300 ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none'}`}>
         <div className="whatsapp-chat-header bg-[#075e54] text-white p-4 rounded-t-lg flex items-center gap-3">
           <div className="whatsapp-chat-avatar w-10 h-10 rounded-full overflow-hidden">
             <img src="https://i.ibb.co/s90nbwpr/techrealm-logo.jpg" alt="Company Logo" className="w-full h-full object-cover" />
@@ -81,7 +81,7 @@ export const WhatsAppChat = () => {
 
       <a
         href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(presetMessage)}`}
-        className="blantershow-chat fixed bottom-8 right-8 bg-[#25d366] text-white p-4 rounded-full shadow-lg flex items-center gap-2 hover:bg-[#1ea952] transition-colors z-40"
+        className="blantershow-chat fixed bottom-8 left-8 bg-[#25d366] text-white p-4 rounded-full shadow-lg flex items-center gap-2 hover:bg-[#1ea952] transition-colors z-40"
         target="_blank"
         rel="noopener noreferrer"
         onClick={(e) => {
