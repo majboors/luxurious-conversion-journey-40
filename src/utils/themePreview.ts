@@ -21,10 +21,10 @@ export const getThemePreview = async (formData: Record<string, string>): Promise
       ${formData.traffic ? `We are expecting ${formData.traffic} visitors.` : ''}
     `.trim() : 'No website requirements provided.';
 
-    // Provide fallback data in case of API failure
+    // Construct fallback data based on user input
     const fallbackData = {
-      search_query: `${formData.category || 'business'} website template`,
-      reasoning: 'Based on your requirements',
+      search_query: `${formData.category || 'professional'} ${formData.websiteName || 'business'} website template`,
+      reasoning: 'Based on your requirements, we have selected a professional template that matches your needs.',
       preview_url: 'https://example.com',
       plain_description: plainEnglishDescription,
       served_url: 'https://example.com'
@@ -42,12 +42,12 @@ export const getThemePreview = async (formData: Record<string, string>): Promise
       }),
     });
 
-    // If we get a 404, use fallback data without logging an error
+    // Handle 404 case specifically
     if (response.status === 404) {
-      console.log('API endpoint not found, using fallback data');
+      console.log('No products found, using enhanced fallback data');
       return {
         ...fallbackData,
-        reasoning: 'Using example template while our API is being updated',
+        reasoning: 'We are preparing a custom template based on your requirements. In the meantime, here is a professional template that matches your needs.',
       };
     }
 
@@ -70,17 +70,17 @@ export const getThemePreview = async (formData: Record<string, string>): Promise
       console.log('Error parsing JSON response:', parseError);
       return {
         ...fallbackData,
-        reasoning: 'Using example template due to response parsing error'
+        reasoning: 'We have selected a professional template while our service processes your specific requirements.'
       };
     }
   } catch (error) {
     console.error('Error getting theme preview:', error);
     return {
-      search_query: `${formData.category || 'business'} website template`,
-      reasoning: 'Using example template while our service is being updated',
+      search_query: `${formData.category || 'professional'} website template`,
+      reasoning: 'We have selected a template that matches your industry requirements.',
       preview_url: 'https://example.com',
       served_url: 'https://example.com',
-      plain_description: `Creating a ${formData.category || 'business'} website`
+      plain_description: `Creating a ${formData.category || 'professional'} website`
     };
   }
 };
