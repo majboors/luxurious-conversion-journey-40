@@ -50,6 +50,8 @@ export const getThemePreview = async (formData: Record<string, string>): Promise
       }),
     });
 
+    console.log('API Response status:', response.status);
+
     // Handle 404 case specifically
     if (response.status === 404) {
       console.log('No products found, using enhanced fallback data');
@@ -81,8 +83,9 @@ export const getThemePreview = async (formData: Record<string, string>): Promise
     }
   } catch (error) {
     console.error('Error getting theme preview:', error);
-    return getFallbackData(
+    const fallbackData = getFallbackData(
       'We have selected a template that matches your industry requirements.'
     );
+    return fallbackData;
   }
 };
