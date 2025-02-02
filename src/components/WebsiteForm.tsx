@@ -4,6 +4,13 @@ import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { ShoppingCart, Calendar, BookOpen, Image, DollarSign as DollarSignIcon, Speaker, Users as Users2, Target, Linkedin, Plus } from "lucide-react";
 import { LoadingScreen } from "./LoadingScreen";
 import { AnimatedButton } from "@/components/ui/animated-button";
@@ -60,6 +67,7 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
   const [showChat, setShowChat] = useState(false);
   const [customCategory, setCustomCategory] = useState("");
   const [customGoal, setCustomGoal] = useState("");
+  const [selectedDomain, setSelectedDomain] = useState(".com");
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     websiteName: "",
@@ -68,6 +76,13 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
     goal: "",
     traffic: "",
   });
+
+  const domainOptions = [
+    { value: ".com", label: ".com" },
+    { value: ".store", label: ".store" },
+    { value: ".online", label: ".online" },
+    { value: ".xyz", label: ".xyz" },
+  ];
 
   const progress = ((currentStep + 1) / steps.length) * 100;
 
@@ -185,36 +200,6 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
     }, 3000);
   };
 
-  const handleCategoryChange = (category: string) => {
-    if (category === "Others") {
-      setFormData(prev => ({ ...prev, category: customCategory || "Others" }));
-    } else {
-      setFormData(prev => ({ ...prev, category }));
-      setCustomCategory("");
-    }
-  };
-
-  const handleGoalChange = (goal: string) => {
-    if (goal === "Others") {
-      setFormData(prev => ({ ...prev, goal: customGoal || "Others" }));
-    } else {
-      setFormData(prev => ({ ...prev, goal }));
-      setCustomGoal("");
-    }
-  };
-
-  const handleCustomCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setCustomCategory(value);
-    setFormData(prev => ({ ...prev, category: value || "Others" }));
-  };
-
-  const handleCustomGoalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setCustomGoal(value);
-    setFormData(prev => ({ ...prev, goal: value || "Others" }));
-  };
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     const sanitizedValue = value.replace(/[\n\r]/g, ' ').replace(/[^\w\s-]/g, '');
@@ -229,13 +214,33 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
       case 0:
         return (
           <div className="space-y-6 py-6">
-            <Input
-              placeholder="www.yourwebsite.com"
-              name="websiteName"
-              value={formData.websiteName}
-              onChange={handleInputChange}
-              className="text-lg py-6 px-4 transition-all duration-300 focus:scale-105"
-            />
+            <div className="flex items-center gap-2">
+              <div className="flex-1 relative">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">www.</span>
+                <Input
+                  placeholder="yourwebsite"
+                  name="websiteName"
+                  value={formData.websiteName}
+                  onChange={handleInputChange}
+                  className="pl-14 text-lg py-6 px-4 transition-all duration-300 focus:scale-105"
+                />
+              </div>
+              <Select
+                value={selectedDomain}
+                onValueChange={setSelectedDomain}
+              >
+                <SelectTrigger className="w-[120px]">
+                  <SelectValue placeholder="Select domain" />
+                </SelectTrigger>
+                <SelectContent>
+                  {domainOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         );
       case 1:
