@@ -315,36 +315,36 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
       </Dialog>
 
       <AlertDialog open={showSuccess} onOpenChange={setShowSuccess}>
-        <AlertDialogContent className="max-w-md bg-white dark:bg-gray-900">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-2xl text-center mb-4 text-foreground">
+        <AlertDialogContent className="max-w-[500px] bg-white p-8 rounded-lg">
+          <AlertDialogHeader className="space-y-6">
+            <AlertDialogTitle className="text-4xl font-bold text-center">
               We have found a developer for you!
             </AlertDialogTitle>
             <AlertDialogDescription>
               <div className="flex flex-col items-center space-y-4">
-                <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-200">
+                <div className="w-32 h-32 rounded-full overflow-hidden bg-gray-200">
                   <img
                     src="https://www.aurumbureau.com/wp-content/uploads/2020/11/Aurum-Speakers-Bureau-Samy-Kamkar.jpg"
                     alt="Waleed Ajmal"
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="text-center">
-                  <h3 className="font-semibold text-lg text-foreground">Waleed Ajmal</h3>
-                  <p className="text-sm text-muted-foreground">Full Stack Developer</p>
+                <div className="text-center space-y-2">
+                  <h3 className="text-2xl font-bold text-gray-900">Waleed Ajmal</h3>
+                  <p className="text-xl text-gray-600">Full Stack Developer</p>
                 </div>
                 <a
                   href="https://www.linkedin.com/in/waleed-ajmal?originalSubdomain=pk"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-accent hover:text-accent/80 transition-colors"
+                  className="flex items-center gap-2 text-[#0077b5] hover:text-[#0077b5]/80 transition-colors text-lg"
                 >
-                  <Linkedin className="w-5 h-5" />
+                  <Linkedin className="w-6 h-6" />
                   <span>View LinkedIn Profile</span>
                 </a>
                 <AnimatedButton 
                   onClick={handleSuccessClose}
-                  className="mt-4 w-full"
+                  className="w-full mt-6 bg-gray-900 text-white py-4 rounded-lg text-xl hover:bg-gray-800 transition-colors"
                 >
                   Continue
                 </AnimatedButton>
