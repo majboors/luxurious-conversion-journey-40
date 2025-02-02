@@ -24,20 +24,20 @@ export const WhatsAppChat = () => {
 
   return (
     <>
-      <div id="whatsapp-chat" className={`fixed bottom-24 left-12 z-50 w-[360px] bg-white rounded-lg shadow-2xl transform transition-all duration-300 ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none'}`}>
-        <div className="whatsapp-chat-header bg-[#075e54] text-white p-4 rounded-t-lg flex items-center gap-3">
-          <div className="whatsapp-chat-avatar w-10 h-10 rounded-full overflow-hidden">
+      <div id="whatsapp-chat" className={`fixed bottom-24 left-12 z-50 w-[300px] bg-white rounded-lg shadow-2xl transform transition-all duration-300 ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none'}`}>
+        <div className="whatsapp-chat-header bg-[#075e54] text-white p-3 rounded-t-lg flex items-center gap-2">
+          <div className="whatsapp-chat-avatar w-8 h-8 rounded-full overflow-hidden">
             <img src="https://i.ibb.co/s90nbwpr/techrealm-logo.jpg" alt="Company Logo" className="w-full h-full object-cover" />
           </div>
-          <p>
+          <p className="text-sm">
             <span className="whatsapp-chat-name font-semibold block">Web Development</span>
-            <small className="text-gray-200">Typically replies within an hour</small>
+            <small className="text-gray-200 text-xs">Typically replies within an hour</small>
           </p>
         </div>
         
-        <div className='start-chat bg-[#DCF8C6] p-4'>
+        <div className='start-chat bg-[#DCF8C6] p-3'>
           <div className="whatsapp-chat-body">
-            <div className="dAbFpq bg-white rounded-lg p-3 shadow-sm">
+            <div className="dAbFpq bg-white rounded-lg p-2 shadow-sm">
               <div className="eJJEeC">
                 <div className="hFENyl">
                   <div className="ixsrax"></div>
@@ -46,33 +46,33 @@ export const WhatsAppChat = () => {
                 </div>
               </div>
               <div className="kAZgZq">
-                <div className="bMIBDo font-semibold">Web Development</div>
-                <div className="iSpIQi">Hi there 👋<br /><br />How can I help you?</div>
+                <div className="bMIBDo font-semibold text-sm">Web Development</div>
+                <div className="iSpIQi text-sm">Hi there 👋<br /><br />How can I help you?</div>
                 <div className="cqCDVm text-xs text-gray-500">1:40</div>
               </div>
             </div>
           </div>
 
-          <div className="blanter-msg flex items-center gap-2 bg-white p-4 mt-4 rounded-lg shadow-sm">
+          <div className="blanter-msg flex items-center gap-2 bg-white p-2 mt-3 rounded-lg shadow-sm">
             <textarea
               id="chat-input"
               placeholder="Write a response"
               maxLength={120}
-              className="flex-1 resize-none border-none focus:outline-none"
+              className="flex-1 resize-none border-none focus:outline-none text-sm"
               onKeyPress={handleKeyPress}
             />
             <button
               onClick={handleSendMessage}
-              className="bg-[#4caf50] p-2 rounded-full hover:bg-[#45a049] transition-colors"
+              className="bg-[#4caf50] p-1.5 rounded-full hover:bg-[#45a049] transition-colors"
             >
-              <svg viewBox="0 0 448 448" className="w-6 h-6 fill-white">
+              <svg viewBox="0 0 448 448" className="w-4 h-4 fill-white">
                 <path d="M.213 32L0 181.333 320 224 0 266.667.213 416 448 224z"/>
               </svg>
             </button>
           </div>
         </div>
         <button
-          className="close-chat absolute top-2 right-2 text-white text-2xl font-bold w-8 h-8 flex items-center justify-center hover:bg-[#063e39] rounded-full transition-colors"
+          className="close-chat absolute top-1 right-1 text-white text-xl font-bold w-6 h-6 flex items-center justify-center hover:bg-[#063e39] rounded-full transition-colors"
           onClick={() => setIsVisible(false)}
         >
           ×
@@ -81,7 +81,7 @@ export const WhatsAppChat = () => {
 
       <a
         href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(presetMessage)}`}
-        className="blantershow-chat fixed bottom-8 left-8 bg-[#25d366] text-white p-4 rounded-full shadow-lg flex items-center gap-2 hover:bg-[#1ea952] transition-colors z-40"
+        className="blantershow-chat fixed bottom-8 left-8 bg-[#25d366] text-white px-4 py-2 rounded-full shadow-lg flex items-center gap-2 hover:bg-[#1ea952] transition-colors z-40 text-sm"
         target="_blank"
         rel="noopener noreferrer"
         onClick={(e) => {
