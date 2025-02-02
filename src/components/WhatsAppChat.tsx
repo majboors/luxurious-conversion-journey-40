@@ -79,7 +79,7 @@ export const WhatsAppChat = () => {
         rel="noopener noreferrer"
         onClick={(e) => {
           e.preventDefault();
-          setIsVisible(true);
+          setIsVisible(!isVisible); // Toggle the visibility state
         }}
       >
         <svg width="20" viewBox="0 0 24 24">
