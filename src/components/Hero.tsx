@@ -27,13 +27,13 @@ export const Hero = () => {
 
       <div className="max-w-4xl mx-auto text-center space-y-12 animate-fade-in">
         {/* Main Headline */}
-        <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-foreground">
+        <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-foreground dark:text-white">
           Get <TypewriterText words={words} delay={2000} /> <br />
           Get a website.
         </h1>
 
         {/* Subheadline */}
-        <p className="text-xl md:text-2xl mb-12 text-foreground/80">
+        <p className="text-xl md:text-2xl mb-12 text-foreground/80 dark:text-white/80">
           Your professional website is just one click away
         </p>
 
@@ -41,7 +41,7 @@ export const Hero = () => {
         <Button
           size="lg"
           onClick={() => setShowForm(true)}
-          className="bg-secondary-DEFAULT text-secondary-foreground hover:bg-secondary-DEFAULT/90 text-lg px-8 py-6 h-auto transform hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-secondary-DEFAULT/20 animate-pulse"
+          className="bg-secondary-DEFAULT text-secondary-foreground dark:text-primary-DEFAULT hover:bg-secondary-DEFAULT/90 text-lg px-8 py-6 h-auto transform hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-secondary-DEFAULT/20 animate-pulse"
         >
           Get Your Website Now for 15 USD
         </Button>
@@ -53,7 +53,7 @@ export const Hero = () => {
               key={index}
               variant="outline"
               onClick={() => setShowForm(true)}
-              className="border-foreground/20 hover:bg-foreground/10 text-foreground hover:text-foreground text-lg py-6 transform hover:scale-105 transition-all duration-300 hover:border-foreground/40 hover:shadow-md"
+              className="border-foreground/20 hover:bg-foreground/10 text-foreground dark:text-white hover:text-foreground dark:hover:text-white text-lg py-6 transform hover:scale-105 transition-all duration-300 hover:border-foreground/40 hover:shadow-md"
             >
               {text}
             </Button>
