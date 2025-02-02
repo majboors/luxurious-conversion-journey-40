@@ -53,7 +53,7 @@ export const Hero = () => {
               key={index}
               variant="outline"
               onClick={() => setShowForm(true)}
-              className="border-foreground/20 hover:bg-foreground/10 text-foreground text-lg py-6 transform hover:scale-105 transition-all duration-300 hover:border-foreground/40 hover:shadow-md"
+              className="border-foreground/20 hover:bg-foreground/10 text-foreground hover:text-foreground text-lg py-6 transform hover:scale-105 transition-all duration-300 hover:border-foreground/40 hover:shadow-md"
             >
               {text}
             </Button>
