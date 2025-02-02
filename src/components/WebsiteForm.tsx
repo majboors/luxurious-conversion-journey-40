@@ -209,6 +209,36 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
     }));
   };
 
+  const handleCategoryChange = (category: string) => {
+    if (category === "Others") {
+      setFormData(prev => ({ ...prev, category: customCategory || "Others" }));
+    } else {
+      setFormData(prev => ({ ...prev, category }));
+      setCustomCategory("");
+    }
+  };
+
+  const handleGoalChange = (goal: string) => {
+    if (goal === "Others") {
+      setFormData(prev => ({ ...prev, goal: customGoal || "Others" }));
+    } else {
+      setFormData(prev => ({ ...prev, goal }));
+      setCustomGoal("");
+    }
+  };
+
+  const handleCustomCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setCustomCategory(value);
+    setFormData(prev => ({ ...prev, category: value || "Others" }));
+  };
+
+  const handleCustomGoalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setCustomGoal(value);
+    setFormData(prev => ({ ...prev, goal: value || "Others" }));
+  };
+
   const renderStep = () => {
     switch (currentStep) {
       case 0:
