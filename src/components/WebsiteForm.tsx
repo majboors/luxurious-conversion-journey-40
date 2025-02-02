@@ -246,7 +246,7 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
           <div className="space-y-6 py-6">
             <div className="flex items-center gap-2">
               <div className="flex-1 relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 select-none pointer-events-none">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 select-none pointer-events-none z-10">
                   www.
                 </span>
                 <Input
@@ -254,7 +254,7 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
                   name="websiteName"
                   value={formData.websiteName}
                   onChange={handleInputChange}
-                  className="pl-[4.5rem] text-lg py-6 px-4 transition-all duration-300 focus:scale-105"
+                  className="pl-[5.5rem] text-lg py-6 px-4 transition-all duration-300 focus:scale-105"
                 />
               </div>
               <Select
