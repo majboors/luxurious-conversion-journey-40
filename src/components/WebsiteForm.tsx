@@ -245,23 +245,26 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
         return (
           <div className="space-y-6 py-6">
             <div className="flex items-center gap-2">
-              <div className="flex-1 relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 select-none pointer-events-none z-10">
-                  www.
-                </span>
-                <Input
-                  placeholder="yourwebsite"
-                  name="websiteName"
-                  value={formData.websiteName}
-                  onChange={handleInputChange}
-                  className="pl-[5.5rem] text-lg py-6 px-4 transition-all duration-300 focus:scale-105"
-                />
+              <div className="flex-1">
+                <div className="relative flex items-center w-full rounded-md border border-input bg-background ring-offset-background">
+                  <div className="absolute left-3 text-sm text-gray-500 select-none pointer-events-none">
+                    www.
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="yourwebsite"
+                    name="websiteName"
+                    value={formData.websiteName}
+                    onChange={handleInputChange}
+                    className="flex h-12 w-full rounded-md bg-transparent pl-[4.5rem] pr-3 text-lg file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                  />
+                </div>
               </div>
               <Select
                 value={selectedDomain}
                 onValueChange={setSelectedDomain}
               >
-                <SelectTrigger className="w-[120px]">
+                <SelectTrigger className="w-[120px] h-12">
                   <SelectValue placeholder="Select domain" />
                 </SelectTrigger>
                 <SelectContent>
