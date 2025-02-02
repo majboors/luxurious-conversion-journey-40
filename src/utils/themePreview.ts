@@ -21,14 +21,22 @@ export const getThemePreview = async (formData: Record<string, string>): Promise
       ${formData.traffic ? `We are expecting ${formData.traffic} visitors.` : ''}
     `.trim() : 'No website requirements provided.';
 
-    // Construct fallback data based on user input
-    const fallbackData = {
+    // Enhanced fallback data based on user input
+    const getFallbackData = (reason: string) => ({
       search_query: `${formData.category || 'professional'} ${formData.websiteName || 'business'} website template`,
-      reasoning: 'Based on your requirements, we have selected a professional template that matches your needs.',
-      preview_url: 'https://example.com',
+      reasoning: reason,
+      preview_url: formData.category === 'Ecommerce' 
+        ? 'https://shopify.com/examples' 
+        : formData.category === 'Portfolio' 
+          ? 'https://www.wix.com/website/templates/html/portfolio' 
+          : 'https://example.com',
       plain_description: plainEnglishDescription,
-      served_url: 'https://example.com'
-    };
+      served_url: formData.category === 'Ecommerce' 
+        ? 'https://shopify.com/examples' 
+        : formData.category === 'Portfolio' 
+          ? 'https://www.wix.com/website/templates/html/portfolio' 
+          : 'https://example.com'
+    });
 
     console.log('Calling theme preview API with description:', plainEnglishDescription);
     
@@ -45,10 +53,9 @@ export const getThemePreview = async (formData: Record<string, string>): Promise
     // Handle 404 case specifically
     if (response.status === 404) {
       console.log('No products found, using enhanced fallback data');
-      return {
-        ...fallbackData,
-        reasoning: 'We are preparing a custom template based on your requirements. In the meantime, here is a professional template that matches your needs.',
-      };
+      return getFallbackData(
+        'We are preparing a custom template based on your requirements. In the meantime, here is a professional template that matches your needs.'
+      );
     }
 
     if (!response.ok) {
@@ -68,19 +75,14 @@ export const getThemePreview = async (formData: Record<string, string>): Promise
       };
     } catch (parseError) {
       console.log('Error parsing JSON response:', parseError);
-      return {
-        ...fallbackData,
-        reasoning: 'We have selected a professional template while our service processes your specific requirements.'
-      };
+      return getFallbackData(
+        'We have selected a professional template while our service processes your specific requirements.'
+      );
     }
   } catch (error) {
     console.error('Error getting theme preview:', error);
-    return {
-      search_query: `${formData.category || 'professional'} website template`,
-      reasoning: 'We have selected a template that matches your industry requirements.',
-      preview_url: 'https://example.com',
-      served_url: 'https://example.com',
-      plain_description: `Creating a ${formData.category || 'professional'} website`
-    };
+    return getFallbackData(
+      'We have selected a template that matches your industry requirements.'
+    );
   }
 };
