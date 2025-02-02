@@ -15,7 +15,7 @@ export const Pricing = () => {
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-white">
           Unbeatable Value
         </h2>
-        <div className="bg-background rounded-2xl p-8 shadow-xl animate-fade-in">
+        <div className="bg-background rounded-2xl p-8 shadow-xl animate-fade-in border border-white/20 dark:border-white/40 dark:bg-gray-900">
           <div className="text-foreground">
             <h3 className="text-2xl font-bold mb-4 text-black dark:text-white">Complete Website Package</h3>
             <div className="text-5xl font-bold mb-8 text-black dark:text-white">
