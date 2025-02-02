@@ -47,19 +47,29 @@ const getFallbackData = (formData: Record<string, string>, reason: string): Them
 const constructPlainDescription = (formData: Record<string, string>): string => {
   const hasValidData = formData.websiteName || formData.websiteDescription || formData.category || formData.goal || formData.traffic;
 
-  return hasValidData ? `
-    I want to create a website called "${formData.websiteName || 'Untitled'}".
-    ${formData.websiteDescription ? `The website is about ${formData.websiteDescription}.` : ''}
-    ${formData.category ? `It falls under the ${formData.category} category.` : ''}
-    ${formData.goal ? `The main goal is to ${formData.goal}.` : ''}
-    ${formData.traffic ? `We are expecting ${formData.traffic} visitors.` : ''}
-  `.trim() : 'No website requirements provided.';
+  // Construct a natural language description that focuses on the business aspects
+  let description = '';
+  
+  if (formData.websiteDescription) {
+    description += formData.websiteDescription;
+  }
+  
+  if (formData.category) {
+    description += ` This is a ${formData.category.toLowerCase()} website.`;
+  }
+  
+  if (formData.goal) {
+    description += ` The goal is to ${formData.goal.toLowerCase()}.`;
+  }
+
+  return description.trim() || 'No website requirements provided.';
 };
 
 export const getThemePreview = async (formData: Record<string, string>): Promise<ThemePreviewResponse> => {
   try {
+    // Construct a natural language description for the API
     const description = constructPlainDescription(formData);
-    console.log('Calling theme preview API with description:', description);
+    console.log('Sending description to API:', description);
     
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
@@ -70,16 +80,13 @@ export const getThemePreview = async (formData: Record<string, string>): Promise
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          description
-        }),
+        body: JSON.stringify({ description }),
         signal: controller.signal
       });
 
       clearTimeout(timeoutId);
       console.log('API Response status:', response.status);
 
-      // Handle various HTTP status codes
       if (response.status === 404) {
         console.log('No products found, using enhanced fallback data');
         return getFallbackData(formData, 
