@@ -81,7 +81,7 @@ export const WhatsAppChat = () => {
 
       <a
         href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(presetMessage)}`}
-        className="blantershow-chat fixed bottom-8 left-8 bg-[#25d366] text-white px-4 py-2 rounded-full shadow-lg flex items-center gap-2 hover:bg-[#1ea952] transition-colors z-40 text-sm"
+        className="blantershow-chat fixed bottom-8 left-8 bg-[#25d366] text-white px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 hover:bg-[#1ea952] transition-colors z-40 text-xs"
         target="_blank"
         rel="noopener noreferrer"
         onClick={(e) => {
