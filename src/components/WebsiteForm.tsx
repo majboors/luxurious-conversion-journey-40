@@ -8,6 +8,7 @@ import { ShoppingCart, Calendar, BookOpen, Image, DollarSign as DollarSignIcon, 
 import { LoadingScreen } from "./LoadingScreen";
 import { AnimatedButton } from "@/components/ui/animated-button";
 import { ChatInterface } from "./ChatInterface";
+import { useToast } from "@/components/ui/use-toast";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -59,6 +60,7 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
   const [showChat, setShowChat] = useState(false);
   const [customCategory, setCustomCategory] = useState("");
   const [customGoal, setCustomGoal] = useState("");
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     websiteName: "",
     websiteDescription: "",
@@ -69,7 +71,79 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
 
   const progress = ((currentStep + 1) / steps.length) * 100;
 
+  const validateCurrentStep = () => {
+    const sanitizeText = (text: string) => {
+      return text.replace(/[\n\r]/g, ' ').replace(/[^\w\s-]/g, '');
+    };
+
+    switch (currentStep) {
+      case 0:
+        if (!formData.websiteName.trim()) {
+          toast({
+            title: "Website name is required",
+            description: "Please enter a name for your website",
+            variant: "destructive",
+          });
+          return false;
+        }
+        setFormData(prev => ({
+          ...prev,
+          websiteName: sanitizeText(prev.websiteName)
+        }));
+        break;
+      case 1:
+        if (!formData.websiteDescription.trim()) {
+          toast({
+            title: "Website description is required",
+            description: "Please enter a description for your website",
+            variant: "destructive",
+          });
+          return false;
+        }
+        setFormData(prev => ({
+          ...prev,
+          websiteDescription: sanitizeText(prev.websiteDescription)
+        }));
+        break;
+      case 2:
+        if (!formData.category) {
+          toast({
+            title: "Category selection is required",
+            description: "Please select a category for your website",
+            variant: "destructive",
+          });
+          return false;
+        }
+        break;
+      case 3:
+        if (!formData.goal) {
+          toast({
+            title: "Goal selection is required",
+            description: "Please select a goal for your website",
+            variant: "destructive",
+          });
+          return false;
+        }
+        break;
+      case 4:
+        if (!formData.traffic) {
+          toast({
+            title: "Traffic expectation is required",
+            description: "Please select your expected traffic",
+            variant: "destructive",
+          });
+          return false;
+        }
+        break;
+    }
+    return true;
+  };
+
   const handleNext = async () => {
+    if (!validateCurrentStep()) {
+      return;
+    }
+
     await handleAction('button_click', { button_id: 'next_step' });
     if (currentStep < steps.length - 1) {
       setCurrentStep((prev) => prev + 1);
@@ -92,7 +166,6 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
     setShowSuccess(false);
     setShowFinalLoading(true);
     
-    // Ensure all form data is properly validated before passing
     const finalFormData = {
       websiteName: formData.websiteName || 'Untitled Website',
       websiteDescription: formData.websiteDescription || 'No description provided',
@@ -142,6 +215,15 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
     setFormData(prev => ({ ...prev, goal: value || "Others" }));
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    const sanitizedValue = value.replace(/[\n\r]/g, ' ').replace(/[^\w\s-]/g, '');
+    setFormData(prev => ({
+      ...prev,
+      [name]: sanitizedValue
+    }));
+  };
+
   const renderStep = () => {
     switch (currentStep) {
       case 0:
@@ -149,10 +231,9 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
           <div className="space-y-6 py-6">
             <Input
               placeholder="www.yourwebsite.com"
+              name="websiteName"
               value={formData.websiteName}
-              onChange={(e) =>
-                setFormData({ ...formData, websiteName: e.target.value })
-              }
+              onChange={handleInputChange}
               className="text-lg py-6 px-4 transition-all duration-300 focus:scale-105"
             />
           </div>
@@ -162,10 +243,9 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
           <div className="space-y-6 py-6">
             <Textarea
               placeholder="Write a brief description of your website..."
+              name="websiteDescription"
               value={formData.websiteDescription}
-              onChange={(e) =>
-                setFormData({ ...formData, websiteDescription: e.target.value })
-              }
+              onChange={handleInputChange}
               className="min-h-[100px] text-lg p-4 transition-all duration-300 focus:scale-105"
             />
           </div>
