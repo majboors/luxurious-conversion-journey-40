@@ -18,7 +18,7 @@ export const Pricing = () => {
         <div className="bg-background rounded-2xl p-8 shadow-xl animate-fade-in">
           <div className="text-foreground">
             <h3 className="text-2xl font-bold mb-4 text-black dark:text-white">Complete Website Package</h3>
-            <div className="text-5xl font-bold mb-8">
+            <div className="text-5xl font-bold mb-8 text-black dark:text-white">
               $15 <span className="text-lg">only</span>
             </div>
             <ul className="space-y-4 mb-8">
@@ -29,7 +29,7 @@ export const Pricing = () => {
                 "5 Free Revisions",
                 "24/7 Support",
               ].map((feature, index) => (
-                <li key={index} className="flex items-center justify-center space-x-2">
+                <li key={index} className="flex items-center justify-center space-x-2 text-black dark:text-white">
                   <Check className="w-5 h-5 text-secondary-DEFAULT" />
                   <span>{feature}</span>
                 </li>
@@ -37,7 +37,7 @@ export const Pricing = () => {
             </ul>
             <Button 
               onClick={handleGetStarted}
-              className="bg-secondary-DEFAULT text-secondary-foreground hover:bg-secondary-DEFAULT/90 px-8 py-6 rounded-lg text-lg font-semibold"
+              className="bg-secondary-DEFAULT text-black dark:text-white hover:bg-secondary-DEFAULT/90 px-8 py-6 rounded-lg text-lg font-semibold"
             >
               Get Started Now
             </Button>

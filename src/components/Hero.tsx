@@ -41,7 +41,7 @@ export const Hero = () => {
         <Button
           size="lg"
           onClick={() => setShowForm(true)}
-          className="bg-secondary-DEFAULT text-secondary-foreground dark:text-primary-DEFAULT hover:bg-secondary-DEFAULT/90 text-lg px-8 py-6 h-auto transform hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-secondary-DEFAULT/20 animate-pulse"
+          className="bg-secondary-DEFAULT text-black dark:text-white hover:bg-secondary-DEFAULT/90 text-lg px-8 py-6 h-auto transform hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-secondary-DEFAULT/20 animate-pulse"
         >
           Get Your Website Now for 15 USD
         </Button>
@@ -53,7 +53,7 @@ export const Hero = () => {
               key={index}
               variant="outline"
               onClick={() => setShowForm(true)}
-              className="border-foreground/20 hover:bg-foreground/10 text-foreground dark:text-white hover:text-foreground dark:hover:text-white text-lg py-6 transform hover:scale-105 transition-all duration-300 hover:border-foreground/40 hover:shadow-md"
+              className="border-foreground/20 hover:bg-foreground/10 text-black dark:text-white hover:text-foreground dark:hover:text-white text-lg py-6 transform hover:scale-105 transition-all duration-300 hover:border-foreground/40 hover:shadow-md"
             >
               {text}
             </Button>
