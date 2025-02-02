@@ -17,7 +17,7 @@ export const createPaymentIntent = async () => {
         success_url: `${window.location.origin}/payment/success`,
         cancel_url: `${window.location.origin}/`,
         failure_url: `${window.location.origin}/payment/failed`,
-        test: true,
+        test: false,
         transaction_source: "directApi"
       })
     });
