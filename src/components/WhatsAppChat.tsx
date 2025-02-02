@@ -15,6 +15,13 @@ export const WhatsAppChat = () => {
     }
   };
 
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      handleSendMessage();
+    }
+  };
+
   return (
     <>
       <div id="whatsapp-chat" className={isVisible ? 'show' : 'hide'}>
@@ -29,7 +36,7 @@ export const WhatsAppChat = () => {
           </p>
         </div>
         
-        <div className="start-chat">
+        <div className='start-chat'>
           <div className="whatsapp-chat-body">
             <div className="dAbFpq">
               <div className="eJJEeC">
@@ -53,6 +60,7 @@ export const WhatsAppChat = () => {
               placeholder="Write a response"
               maxLength={120}
               className="flex-1 resize-none border-none focus:outline-none"
+              onKeyPress={handleKeyPress}
             />
             <button
               onClick={handleSendMessage}
@@ -79,7 +87,7 @@ export const WhatsAppChat = () => {
         rel="noopener noreferrer"
         onClick={(e) => {
           e.preventDefault();
-          setIsVisible(!isVisible); // Toggle the visibility state
+          setIsVisible(!isVisible);
         }}
       >
         <svg width="20" viewBox="0 0 24 24">
