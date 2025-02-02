@@ -4,6 +4,7 @@ import { Pricing } from "@/components/Pricing";
 import { ThemeProvider } from "next-themes";
 import { useState, useEffect } from "react";
 import { ChatInterface } from "@/components/ChatInterface";
+import { WhatsAppChat } from "@/components/WhatsAppChat";
 
 const Index = () => {
   const [showChat, setShowChat] = useState(false);
@@ -41,6 +42,7 @@ const Index = () => {
             </div>
           </>
         )}
+        <WhatsAppChat />
       </div>
     </ThemeProvider>
   );
