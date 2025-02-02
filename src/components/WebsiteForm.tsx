@@ -281,7 +281,7 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
   return (
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="sm:max-w-[600px]">
+        <DialogContent className="sm:max-w-[600px] bg-white dark:bg-gray-900">
           <div id="form-content" className="space-y-8 max-h-[80vh] overflow-y-auto">
             <div className="space-y-2">
               <Progress value={progress} className="h-2" />
@@ -292,7 +292,7 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
             </div>
 
             <div>
-              <h2 className="text-2xl font-bold tracking-tight">
+              <h2 className="text-2xl font-bold tracking-tight text-foreground">
                 {steps[currentStep].title}
               </h2>
               <p className="text-muted-foreground">
@@ -305,7 +305,7 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
             <div className="flex justify-end">
               <Button
                 onClick={handleNext}
-                className="w-32 h-12 text-lg hover:scale-105 transition-all duration-300"
+                className="w-32 h-12 text-lg hover:scale-105 transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 {currentStep === steps.length - 1 ? "Finish" : "Next"}
               </Button>
@@ -315,9 +315,9 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
       </Dialog>
 
       <AlertDialog open={showSuccess} onOpenChange={setShowSuccess}>
-        <AlertDialogContent className="max-w-md">
+        <AlertDialogContent className="max-w-md bg-white dark:bg-gray-900">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-2xl text-center mb-4">
+            <AlertDialogTitle className="text-2xl text-center mb-4 text-foreground">
               We have found a developer for you!
             </AlertDialogTitle>
             <AlertDialogDescription>
@@ -330,7 +330,7 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
                   />
                 </div>
                 <div className="text-center">
-                  <h3 className="font-semibold text-lg">Waleed Ajmal</h3>
+                  <h3 className="font-semibold text-lg text-foreground">Waleed Ajmal</h3>
                   <p className="text-sm text-muted-foreground">Full Stack Developer</p>
                 </div>
                 <a
