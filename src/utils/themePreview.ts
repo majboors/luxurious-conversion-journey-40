@@ -7,38 +7,39 @@ interface ThemePreviewResponse {
   plain_description?: string;
 }
 
+// Move getFallbackData to module scope
+const getFallbackData = (formData: Record<string, string>, reason: string) => ({
+  search_query: `${formData.category || 'professional'} ${formData.websiteName || 'business'} website template`,
+  reasoning: reason,
+  preview_url: formData.category === 'Ecommerce' 
+    ? 'https://shopify.com/examples' 
+    : formData.category === 'Portfolio' 
+      ? 'https://www.wix.com/website/templates/html/portfolio' 
+      : 'https://example.com',
+  plain_description: constructPlainDescription(formData),
+  served_url: formData.category === 'Ecommerce' 
+    ? 'https://shopify.com/examples' 
+    : formData.category === 'Portfolio' 
+      ? 'https://www.wix.com/website/templates/html/portfolio' 
+      : 'https://example.com'
+});
+
+const constructPlainDescription = (formData: Record<string, string>): string => {
+  const hasValidData = formData.websiteName || formData.websiteDescription || formData.category || formData.goal || formData.traffic;
+
+  return hasValidData ? `
+    I want to create a website called "${formData.websiteName || 'Untitled'}".
+    ${formData.websiteDescription ? `The website is about ${formData.websiteDescription}.` : ''}
+    ${formData.category ? `It falls under the ${formData.category} category.` : ''}
+    ${formData.goal ? `The main goal is to ${formData.goal}.` : ''}
+    ${formData.traffic ? `We are expecting ${formData.traffic} visitors.` : ''}
+  `.trim() : 'No website requirements provided.';
+};
+
 export const getThemePreview = async (formData: Record<string, string>): Promise<ThemePreviewResponse> => {
   try {
-    // Only construct description if we have valid form data
-    const hasValidData = formData.websiteName || formData.websiteDescription || formData.category || formData.goal || formData.traffic;
-
-    // Convert form data to plain English description
-    const plainEnglishDescription = hasValidData ? `
-      I want to create a website called "${formData.websiteName || 'Untitled'}".
-      ${formData.websiteDescription ? `The website is about ${formData.websiteDescription}.` : ''}
-      ${formData.category ? `It falls under the ${formData.category} category.` : ''}
-      ${formData.goal ? `The main goal is to ${formData.goal}.` : ''}
-      ${formData.traffic ? `We are expecting ${formData.traffic} visitors.` : ''}
-    `.trim() : 'No website requirements provided.';
-
-    // Enhanced fallback data based on user input
-    const getFallbackData = (reason: string) => ({
-      search_query: `${formData.category || 'professional'} ${formData.websiteName || 'business'} website template`,
-      reasoning: reason,
-      preview_url: formData.category === 'Ecommerce' 
-        ? 'https://shopify.com/examples' 
-        : formData.category === 'Portfolio' 
-          ? 'https://www.wix.com/website/templates/html/portfolio' 
-          : 'https://example.com',
-      plain_description: plainEnglishDescription,
-      served_url: formData.category === 'Ecommerce' 
-        ? 'https://shopify.com/examples' 
-        : formData.category === 'Portfolio' 
-          ? 'https://www.wix.com/website/templates/html/portfolio' 
-          : 'https://example.com'
-    });
-
-    console.log('Calling theme preview API with description:', plainEnglishDescription);
+    const description = constructPlainDescription(formData);
+    console.log('Calling theme preview API with description:', description);
     
     const response = await fetch('https://webdevs.applytocollege.pk/get_theme_preview', {
       method: 'POST',
@@ -46,7 +47,7 @@ export const getThemePreview = async (formData: Record<string, string>): Promise
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        description: plainEnglishDescription
+        description
       }),
     });
 
@@ -55,7 +56,7 @@ export const getThemePreview = async (formData: Record<string, string>): Promise
     // Handle 404 case specifically
     if (response.status === 404) {
       console.log('No products found, using enhanced fallback data');
-      return getFallbackData(
+      return getFallbackData(formData, 
         'We are preparing a custom template based on your requirements. In the meantime, here is a professional template that matches your needs.'
       );
     }
@@ -73,19 +74,18 @@ export const getThemePreview = async (formData: Record<string, string>): Promise
       return {
         ...jsonResponse,
         raw_response: rawResponse,
-        plain_description: plainEnglishDescription
+        plain_description: description
       };
     } catch (parseError) {
       console.log('Error parsing JSON response:', parseError);
-      return getFallbackData(
+      return getFallbackData(formData,
         'We have selected a professional template while our service processes your specific requirements.'
       );
     }
   } catch (error) {
     console.error('Error getting theme preview:', error);
-    const fallbackData = getFallbackData(
+    return getFallbackData(formData,
       'We have selected a template that matches your industry requirements.'
     );
-    return fallbackData;
   }
 };
