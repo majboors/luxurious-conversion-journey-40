@@ -19,36 +19,25 @@ export const AnimatedButton = ({ children, className, ...props }: AnimatedButton
       gsap.to(button, {
         keyframes: [
           {
-            '--rotate': 50,
+            '--rotate': 10,
             '--plane-x': -8,
-            '--plane-y': 40,
-            duration: 0.5  // Increased from 0.2
+            '--plane-y': 20,
+            duration: 0.3
           },
           {
-            '--rotate': 60,
+            '--rotate': 15,
             '--plane-x': 45,
-            '--plane-y': -300,
+            '--plane-y': -100,
             '--plane-opacity': 0,
-            duration: 0.8,  // Increased from 0.375
+            duration: 0.3,
             onComplete() {
-              setTimeout(() => {
-                gsap.fromTo(
-                  button,
-                  {
-                    opacity: 0,
-                    y: -8
-                  },
-                  {
-                    opacity: 1,
-                    y: 0,
-                    clearProps: true,
-                    duration: 0.5,  // Increased from 0.3
-                    onComplete() {
-                      button.classList.remove('active');
-                    }
-                  }
-                );
-              }, 1800);
+              gsap.set(button, {
+                '--rotate': 0,
+                '--plane-x': 0,
+                '--plane-y': 0,
+                '--plane-opacity': 1
+              });
+              button.classList.remove('active');
             }
           }
         ]
@@ -72,7 +61,6 @@ export const AnimatedButton = ({ children, className, ...props }: AnimatedButton
         <svg viewBox="0 0 16 16">
           <polyline points="3.75 9 7 12 13 5"></polyline>
         </svg>
-        Sent
       </span>
       <svg className="trails" viewBox="0 0 33 64">
         <path d="M26,4 C28,13.3333333 29,22.6666667 29,32 C29,41.3333333 28,50.6666667 26,60"></path>
