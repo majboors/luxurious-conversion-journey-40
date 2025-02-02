@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Loader2, Send, ExternalLink, Check } from "lucide-react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
@@ -37,6 +37,15 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const isMobile = useIsMobile();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]); // Scroll whenever messages update
 
   const handleExampleClick = async () => {
     await handleAction('button_click', { button_id: 'example_website' });
@@ -307,6 +316,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
               <span>Samy is typing...</span>
             </div>
           )}
+          <div ref={messagesEndRef} /> {/* Add this invisible element at the end */}
         </div>
 
         <div className="p-4 border-t border-border">
