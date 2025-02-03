@@ -6,9 +6,11 @@ import { useState, useEffect } from "react";
 import { ChatInterface } from "@/components/ChatInterface";
 import { WhatsAppChat } from "@/components/WhatsAppChat";
 import { useScrollTracking } from "@/hooks/useScrollTracking";
+import { EmailCollectionPopup } from "@/components/EmailCollectionPopup";
 
 const Index = () => {
   const [showChat, setShowChat] = useState(false);
+  const [showEmailPopup, setShowEmailPopup] = useState(true);
   const [formData, setFormData] = useState({
     websiteName: "",
     websiteDescription: "",
@@ -34,6 +36,10 @@ const Index = () => {
   return (
     <ThemeProvider defaultTheme="light" attribute="class">
       <div className="min-h-screen bg-background">
+        <EmailCollectionPopup 
+          open={showEmailPopup} 
+          onOpenChange={setShowEmailPopup} 
+        />
         {showChat ? (
           <div className="fixed inset-0 z-50 bg-background">
             <ChatInterface formData={formData} />
