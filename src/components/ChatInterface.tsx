@@ -48,12 +48,12 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
   }, [messages]); // Scroll whenever messages update
 
   const handleExampleClick = async () => {
-    await handleAction('button_click', { button_id: 'example_website' });
+    await handleAction('link_click', { link_id: 'example_website' });
     toast({
       title: "Example Website",
       description: "Opening example website preview...",
     });
-    const urlToOpen = previewUrl || 'https://example.com';
+    const urlToOpen = previewUrl || 'example.com';
     window.open(urlToOpen, '_blank');
   };
 
@@ -182,16 +182,10 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
     await handleAction('text_input', { text });
   };
 
-  const handlePayment = async () => {
-    await handleAction('button_click', { button_id: 'payment_button' });
-    try {
-      await createPaymentIntent();
-    } catch (error) {
-      toast({
-        title: "Payment Error",
-        description: "Unable to process payment. Please try again.",
-        variant: "destructive"
-      });
+  const handleKeyPress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      await handleAction('key_press', { key: 'enter', context: 'chat_input' });
+      handleSendMessage();
     }
   };
 
@@ -249,7 +243,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
 
       {/* Chat Section */}
       <div className="flex-1 flex flex-col">
-        <div className="flex items-center gap-3 p-4 border-b border-border bg-primary/5">
+        <div className="flex items-center gap-3 p-4 border-b border-border bg-primary/5" onMouseEnter={() => handleAction('hover', { element: 'developer_header' })}>
           <div className="w-10 h-10 rounded-full overflow-hidden">
             <img
               src="https://www.aurumbureau.com/wp-content/uploads/2020/11/Aurum-Speakers-Bureau-Samy-Kamkar.jpg"
@@ -273,7 +267,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
           </div>
         </div>
 
-        <div id="chat-messages" className="flex-1 overflow-y-auto p-4 space-y-4">
+        <div id="chat-messages" className="flex-1 overflow-y-auto p-4 space-y-4" onMouseEnter={() => handleAction('hover', { element: 'chat_messages' })}>
           {messages.map((message) => (
             <div
               key={message.id}
@@ -301,6 +295,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
                   <button
                     onClick={handleExampleClick}
                     className="flex items-center gap-2 text-accent hover:text-accent/80 transition-colors"
+                    onMouseEnter={() => handleAction('hover', { element: 'example_link' })}
                   >
                     <span className="whitespace-pre-wrap">{message.text}</span>
                     <ExternalLink className="w-4 h-4" />
@@ -325,12 +320,17 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
             <Input
               value={inputMessage}
               onChange={handleInputChange}
+              onKeyPress={handleKeyPress}
               placeholder={canType ? "Type your message..." : "Please wait for developer..."}
               className="flex-1"
-              onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
               disabled={!canType}
             />
-            <Button onClick={handleSendMessage} size="icon" disabled={!canType}>
+            <Button 
+              onClick={handleSendMessage} 
+              size="icon" 
+              disabled={!canType}
+              onMouseEnter={() => handleAction('hover', { element: 'send_message_button' })}
+            >
               <Send className="h-4 w-4" />
             </Button>
           </div>
@@ -349,4 +349,3 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
     </div>
   );
 };
-

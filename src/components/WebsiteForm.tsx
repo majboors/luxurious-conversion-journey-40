@@ -202,11 +202,10 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
 
   const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    await handleAction('text_input', { text: value });
-    const sanitizedValue = value.replace(/[\n\r]/g, ' ').replace(/[^\w\s-]/g, '');
+    await handleAction('text_input', { text: value, field: name });
     setFormData(prev => ({
       ...prev,
-      [name]: sanitizedValue
+      [name]: value
     }));
   };
 
@@ -399,13 +398,19 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
     }
   };
 
-  if (showChat) {
-    return <ChatInterface formData={formData} />;
-  }
+  const handleClose = async () => {
+    await handleAction('button_click', { button_id: 'close_form' });
+    onOpenChange(false);
+  };
+
+  const handleContinueWithDeveloper = async () => {
+    await handleAction('button_click', { button_id: 'continue_with_developer' });
+    handleSuccessClose();
+  };
 
   return (
     <>
-      <Dialog open={open} onOpenChange={onOpenChange}>
+      <Dialog open={open} onOpenChange={handleClose}>
         <DialogContent className="sm:max-w-[600px] bg-white dark:bg-gray-900">
           <div id="form-content" className="space-y-8 max-h-[80vh] overflow-y-auto">
             <div className="space-y-2">
@@ -468,7 +473,7 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
                   <span>View LinkedIn Profile</span>
                 </a>
                 <Button 
-                  onClick={handleSuccessClose}
+                  onClick={handleContinueWithDeveloper}
                   className="w-full mt-4 bg-primary hover:bg-primary/90 text-primary-foreground py-2 px-4 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105"
                   variant="default"
                 >
