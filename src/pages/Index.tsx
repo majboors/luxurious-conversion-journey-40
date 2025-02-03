@@ -7,6 +7,7 @@ import { ChatInterface } from "@/components/ChatInterface";
 import { WhatsAppChat } from "@/components/WhatsAppChat";
 import { useScrollTracking } from "@/hooks/useScrollTracking";
 import { EmailCollectionPopup } from "@/components/EmailCollectionPopup";
+import { handleAction } from "@/utils/actionHandler";
 
 const Index = () => {
   const [showChat, setShowChat] = useState(false);
@@ -19,11 +20,18 @@ const Index = () => {
     traffic: ""
   });
 
-  // Add scroll tracking for main sections
-  useScrollTracking('main-content');
-  useScrollTracking('hero-section');
-  useScrollTracking('benefits-section');
-  useScrollTracking('pricing-section');
+  useEffect(() => {
+    const handleScroll = async () => {
+      await handleAction('scroll', {
+        direction: window.scrollY > (window as any).lastScrollY ? 'down' : 'up',
+        element: 'main-content'
+      });
+      (window as any).lastScrollY = window.scrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const handleShowChat = (event: CustomEvent) => {
@@ -37,7 +45,10 @@ const Index = () => {
 
   return (
     <ThemeProvider defaultTheme="light" attribute="class">
-      <div className="min-h-screen bg-background" id="main-content">
+      <div 
+        className="min-h-screen bg-background" 
+        id="main-content"
+      >
         <EmailCollectionPopup 
           open={showEmailPopup} 
           onOpenChange={setShowEmailPopup} 
