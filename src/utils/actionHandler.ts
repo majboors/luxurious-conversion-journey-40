@@ -3,6 +3,11 @@ interface ActionData {
   button_id?: string;
   direction?: string;
   form_data?: Record<string, unknown>;
+  element?: string;
+  link_id?: string;
+  key?: string;
+  context?: string;
+  field?: string;
 }
 
 interface ActionResponse {

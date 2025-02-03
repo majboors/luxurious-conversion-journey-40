@@ -193,6 +193,23 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
   useScrollTracking('chat-messages');
   useScrollTracking('benefits-sidebar');
 
+  const handlePayment = async () => {
+    await handleAction('button_click', { button_id: 'payment_button' });
+    try {
+      const { clientSecret } = await createPaymentIntent();
+      if (clientSecret) {
+        window.location.href = `/payment?client_secret=${clientSecret}`;
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+      toast({
+        title: "Payment Error",
+        description: "Unable to process payment. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="flex h-screen bg-background">
       {/* Sidebar - Always visible on desktop */}
