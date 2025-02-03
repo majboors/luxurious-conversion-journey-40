@@ -200,8 +200,9 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
     }, 3000);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+    await handleAction('text_input', { text: value });
     const sanitizedValue = value.replace(/[\n\r]/g, ' ').replace(/[^\w\s-]/g, '');
     setFormData(prev => ({
       ...prev,
@@ -209,7 +210,8 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
     }));
   };
 
-  const handleCategoryChange = (category: string) => {
+  const handleCategoryChange = async (category: string) => {
+    await handleAction('button_click', { button_id: `category_${category}` });
     if (category === "Others") {
       setFormData(prev => ({ ...prev, category: customCategory || "Others" }));
     } else {
@@ -218,7 +220,8 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
     }
   };
 
-  const handleGoalChange = (goal: string) => {
+  const handleGoalChange = async (goal: string) => {
+    await handleAction('button_click', { button_id: `goal_${goal}` });
     if (goal === "Others") {
       setFormData(prev => ({ ...prev, goal: customGoal || "Others" }));
     } else {
@@ -227,14 +230,16 @@ export const WebsiteForm = ({ open, onOpenChange }: WebsiteFormProps) => {
     }
   };
 
-  const handleCustomCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCustomCategoryChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
+    await handleAction('text_input', { text: value });
     setCustomCategory(value);
     setFormData(prev => ({ ...prev, category: value || "Others" }));
   };
 
-  const handleCustomGoalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCustomGoalChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
+    await handleAction('text_input', { text: value });
     setCustomGoal(value);
     setFormData(prev => ({ ...prev, goal: value || "Others" }));
   };

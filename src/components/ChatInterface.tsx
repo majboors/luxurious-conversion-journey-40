@@ -183,6 +183,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
   };
 
   const handlePayment = async () => {
+    await handleAction('button_click', { button_id: 'payment_button' });
     try {
       await createPaymentIntent();
     } catch (error) {
@@ -323,7 +324,7 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
           <div className="flex gap-2">
             <Input
               value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
+              onChange={handleInputChange}
               placeholder={canType ? "Type your message..." : "Please wait for developer..."}
               className="flex-1"
               onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
@@ -348,3 +349,4 @@ export const ChatInterface = ({ formData }: ChatInterfaceProps) => {
     </div>
   );
 };
+

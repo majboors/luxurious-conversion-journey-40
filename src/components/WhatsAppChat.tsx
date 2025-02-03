@@ -1,13 +1,15 @@
 import { useState } from 'react';
+import { handleAction } from '@/utils/actionHandler';
 
 export const WhatsAppChat = () => {
   const [isVisible, setIsVisible] = useState(false);
   const phoneNumber = '923461115757'; 
   const presetMessage = 'Directly Contact our CEO!';
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     const input = document.getElementById('chat-input') as HTMLTextAreaElement;
     if (input.value !== '') {
+      await handleAction('text_input', { text: input.value });
       const message = encodeURIComponent(input.value);
       const url = `https://wa.me/${phoneNumber}?text=${message}`;
       window.open(url, '_blank');
@@ -15,11 +17,23 @@ export const WhatsAppChat = () => {
     }
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleKeyPress = async (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    await handleAction('text_input', { text: event.currentTarget.value });
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
       handleSendMessage();
     }
+  };
+
+  const handleInputChange = async (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    await handleAction('text_input', { text: event.target.value });
+  };
+
+  const handleVisibilityToggle = async () => {
+    await handleAction('button_click', { 
+      button_id: isVisible ? 'close_whatsapp_chat' : 'open_whatsapp_chat' 
+    });
+    setIsVisible(!isVisible);
   };
 
   return (
@@ -60,6 +74,7 @@ export const WhatsAppChat = () => {
               maxLength={120}
               className="flex-1 resize-none border-none focus:outline-none text-xs h-6"
               onKeyPress={handleKeyPress}
+              onChange={handleInputChange}
             />
             <button
               onClick={handleSendMessage}
@@ -73,7 +88,7 @@ export const WhatsAppChat = () => {
         </div>
         <button
           className="close-chat absolute top-0.5 right-0.5 text-white text-sm font-bold w-4 h-4 flex items-center justify-center hover:bg-[#063e39] rounded-full transition-colors"
-          onClick={() => setIsVisible(false)}
+          onClick={handleVisibilityToggle}
         >
           ×
         </button>
@@ -86,7 +101,7 @@ export const WhatsAppChat = () => {
         rel="noopener noreferrer"
         onClick={(e) => {
           e.preventDefault();
-          setIsVisible(!isVisible);
+          handleVisibilityToggle();
         }}
       >
         <svg width="12" viewBox="0 0 24 24">
