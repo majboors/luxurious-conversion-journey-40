@@ -19,9 +19,11 @@ const Index = () => {
     traffic: ""
   });
 
-  // Add scroll tracking
-  useScrollTracking('chat-messages');
-  useScrollTracking('benefits-sidebar');
+  // Add scroll tracking for main sections
+  useScrollTracking('main-content');
+  useScrollTracking('hero-section');
+  useScrollTracking('benefits-section');
+  useScrollTracking('pricing-section');
 
   useEffect(() => {
     const handleShowChat = (event: CustomEvent) => {
@@ -35,7 +37,7 @@ const Index = () => {
 
   return (
     <ThemeProvider defaultTheme="light" attribute="class">
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background" id="main-content">
         <EmailCollectionPopup 
           open={showEmailPopup} 
           onOpenChange={setShowEmailPopup} 
@@ -46,10 +48,16 @@ const Index = () => {
           </div>
         ) : (
           <>
-            <Hero />
+            <div id="hero-section">
+              <Hero />
+            </div>
             <div className={`transition-opacity duration-500 ${showChat ? 'opacity-0 hidden' : 'opacity-100'}`}>
-              <Benefits />
-              <Pricing />
+              <div id="benefits-section">
+                <Benefits />
+              </div>
+              <div id="pricing-section">
+                <Pricing />
+              </div>
             </div>
           </>
         )}
