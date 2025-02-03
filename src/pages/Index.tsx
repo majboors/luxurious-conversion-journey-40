@@ -5,6 +5,7 @@ import { ThemeProvider } from "next-themes";
 import { useState, useEffect } from "react";
 import { ChatInterface } from "@/components/ChatInterface";
 import { WhatsAppChat } from "@/components/WhatsAppChat";
+import { useScrollTracking } from "@/hooks/useScrollTracking";
 
 const Index = () => {
   const [showChat, setShowChat] = useState(false);
@@ -15,6 +16,10 @@ const Index = () => {
     goal: "",
     traffic: ""
   });
+
+  // Add scroll tracking
+  useScrollTracking('chat-messages');
+  useScrollTracking('benefits-sidebar');
 
   useEffect(() => {
     const handleShowChat = (event: CustomEvent) => {
